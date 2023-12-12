@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Address extends Model
+class Province extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    public function city()
+    public function country()
     {
-        return $this->belongsTo(City::class, 'city');
+        return $this->belongsTo(Country::class, 'country');
     }
 
-    public function users()
+    public function cities()
     {
-        return $this->hasMany(User::class, 'address');
+        return $this->hasMany(City::class, 'province');
     }
 }

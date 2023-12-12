@@ -11,9 +11,9 @@ class Country extends Model
 
     protected $guarded = ['id'];
 
-    function addresses()
+    function provinces()
     {
-        return $this->hasMany(Address::class, 'country');
+        return $this->hasMany(Province::class, 'country');
     }
 
     function users()
