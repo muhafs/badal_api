@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('nationality');
 
+            $table->string('phone_code');
+            $table->string('currency_code');
+
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name')->nullable();
 
+            $table->enum('gender', ['M', 'F'])->default('M');
             $table->date('birth_date');
 
             $table->text('image_porfile')->nullable();
