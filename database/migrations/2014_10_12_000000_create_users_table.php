@@ -17,10 +17,9 @@ return new class extends Migration
             $table->string('last_name')->nullable();
 
             $table->date('birth_date');
-            $table->string('nickname')->nullable();
 
             $table->text('image_porfile')->nullable();
-            $table->enum('type', ['ADM', 'PRF', 'SKR'])->default('SKR');
+            $table->enum('type', ['ADM', 'PRF', 'SKR'])->default('SKR'); // Performer - Seeker
 
             $table->foreignId('address')->constrained('addresses')->nullOnDelete();
             $table->foreignId('nationality')->constrained('countries')->nullOnDelete();

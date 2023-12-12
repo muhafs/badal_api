@@ -11,6 +11,7 @@ class User extends Authenticatable
 
     protected $guarded = ['id'];
 
+    // Relationship
     function address()
     {
         return $this->belongsTo(Address::class, 'address');
@@ -21,6 +22,12 @@ class User extends Authenticatable
         return $this->hasOne(Contact::class, 'user');
     }
 
+    function seeker()
+    {
+        return $this->hasOne(Seeker::class, 'user');
+    }
+
+    // Methods
     function getImageURL()
     {
         return $this->image_porfile ? url('storage/user/' . $this->image_porfile) : url('storage/default.png');
