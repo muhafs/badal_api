@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('performers', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user')->constrained('users');
+            $table->foreignId('user')->nullable()->constrained('users');
             $table->string('nickname')->nullable();
 
             $table->text('bio')->nullable();

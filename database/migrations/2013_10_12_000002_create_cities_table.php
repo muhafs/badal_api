@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
-            $table->foreignId('province')->constrained('provinces')->nullOnDelete();
+            $table->foreignId('province')->nullable()->constrained('provinces')->nullOnDelete();
 
             $table->timestamps();
         });

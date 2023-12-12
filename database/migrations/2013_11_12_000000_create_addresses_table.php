@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->string('postcode', 10)->nullable();
 
-            $table->foreignId('city')->constrained('cities')->nullOnDelete();
+            $table->foreignId('city')->nullable()->constrained('cities')->nullOnDelete();
 
             $table->timestamps();
         });
