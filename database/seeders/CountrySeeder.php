@@ -19,9 +19,9 @@ class CountrySeeder extends Seeder
         while (($data = fgetcsv($csvData, null, ',')) !== false) {
             if (!$chaptersRow) {
                 Country::create([
-                    'name' => str()->title($data['0']),
-                    'nationality' => str()->title($data['1']),
-                    'currency_code' => str()->upper($data['2']),
+                    'name' => str($data['0'])->title()->squish(),
+                    'nationality' => str($data['1'])->title()->squish(),
+                    'currency_code' => str($data['2'])->upper()->trim(),
                     'phone_code' => $data['3'],
                 ]);
             }
