@@ -27,6 +27,11 @@ class User extends Authenticatable
         return $this->hasOne(Seeker::class, 'user');
     }
 
+    function performer()
+    {
+        return $this->hasOne(Performer::class, 'user');
+    }
+
     // Methods
     function getImageURL()
     {
