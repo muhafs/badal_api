@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CountryResource;
+use App\Http\Requests\GetCountryRequest;
 use App\Http\Requests\StoreCountryRequest;
 use App\Http\Resources\CountryListResource;
 use App\Http\Resources\CurrencyListResource;
@@ -32,6 +34,16 @@ class CountryController extends Controller
         return response()->json([
             'message' => 'Success',
             'data' => CountryListResource::collection($countries),
+        ], 200);
+    }
+
+    function show(GetCountryRequest $request)
+    {
+        $country = Country::find($request->id);
+
+        return response()->json([
+            'message' => 'Success',
+            'data' => new CountryResource($country),
         ], 200);
     }
 

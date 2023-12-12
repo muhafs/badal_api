@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CountryController;
 
 Route::controller(CountryController::class)->group(function () {
     Route::get('country', 'index');
+    Route::get('country/{id}', 'show');
     Route::post('country', 'store');
 
     Route::get('nationality', 'nationalities');
