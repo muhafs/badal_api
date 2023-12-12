@@ -6,6 +6,7 @@ use App\Models\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCountryRequest;
+use App\Http\Resources\CountryListResource;
 use App\Http\Resources\CurrencyListResource;
 use App\Http\Resources\phoneCodeListResource;
 use App\Http\Resources\NationalityListResource;
@@ -30,7 +31,7 @@ class CountryController extends Controller
 
         return response()->json([
             'message' => 'Success',
-            'data' => $countries,
+            'data' => CountryListResource::collection($countries),
         ], 200);
     }
 
