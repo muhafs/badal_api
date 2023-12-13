@@ -22,7 +22,7 @@ class StoreCountryRequest extends FormRequest
             'name' => 'required|string|unique:countries,name',
             'nationality' => 'required|string|unique:countries,nationality',
             'phone_code' => 'required|numeric|unique:countries,phone_code',
-            'currency_code' => 'required|string|unique:countries,currency_code',
+            'currency_code' => 'required|string|max:3|unique:countries,currency_code',
         ];
     }
 
@@ -40,6 +40,7 @@ class StoreCountryRequest extends FormRequest
             'phone_code.unique' => 'this Phone code has already taken',
 
             'currency_code.required' => 'Currency code can\'t be Empty',
+            'currency_code.max' => 'Currency code has to be 3 Characters',
             'currency_code.unique' => 'this Currency code has already taken',
         ];
     }

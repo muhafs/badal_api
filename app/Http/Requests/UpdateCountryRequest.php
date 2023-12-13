@@ -30,7 +30,7 @@ class UpdateCountryRequest extends FormRequest
             'name' => 'required|string|unique:countries,name,' . $this->id,
             'nationality' => 'required|string|unique:countries,nationality,' . $this->id,
             'phone_code' => 'required|numeric|unique:countries,phone_code,' . $this->id,
-            'currency_code' => 'required|string|unique:countries,currency_code,' . $this->id,
+            'currency_code' => 'required|string|max:3|unique:countries,currency_code,' . $this->id,
         ];
     }
 
@@ -52,6 +52,7 @@ class UpdateCountryRequest extends FormRequest
             'phone_code.unique' => 'this Phone code has already taken',
 
             'currency_code.required' => 'Currency code can\'t be Empty',
+            'currency_code.max' => 'Currency code has to be 3 Characters',
             'currency_code.unique' => 'this Currency code has already taken',
         ];
     }
