@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CountryResource;
 use App\Http\Requests\GetCountryRequest;
 use App\Http\Requests\StoreCountryRequest;
+use App\Http\Requests\UpdateCountryRequest;
 use App\Http\Resources\CountryListResource;
 use App\Http\Resources\CurrencyListResource;
 use App\Http\Resources\phoneCodeListResource;
@@ -59,10 +60,32 @@ class CountryController extends Controller
         if ($country) {
             return response()->json([
                 'message' => 'Success Create Country'
-            ], 200);
+            ], 201);
         } else {
             return response()->json([
                 'message' => 'Something went Error while Creating Country'
+            ], 400);
+        }
+    }
+
+    function update(UpdateCountryRequest $request)
+    {
+        $country = Country::find($request->id);
+
+        $country->update([
+            'name' => str($request->name ?? $country->name)->title()->squish(),
+            'nationality' => str($request->nationality ?? $country->nationality)->title()->squish(),
+            'currency_code' => str($request->currency_code ?? $country->currency_code)->upper()->trim(),
+            'phone_code' => ($request->phone_code ?? $country->phone_code),
+        ]);
+
+        if ($country) {
+            return response()->json([
+                'message' => 'Success Update Country'
+            ], 201);
+        } else {
+            return response()->json([
+                'message' => 'Something went Error while Updating Country'
             ], 400);
         }
     }

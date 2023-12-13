@@ -10,6 +10,7 @@ Route::controller(CountryController::class)->group(function () {
     Route::get('country', 'index');
     Route::get('country/{id}', 'show');
     Route::post('country', 'store');
+    Route::put('country', 'update');
 
     Route::get('nationality', 'nationalities');
     Route::get('currency', 'currencies');
