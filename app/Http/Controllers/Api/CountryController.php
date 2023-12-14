@@ -14,18 +14,6 @@ use App\Http\Resources\Country\CurrencyListResource;
 use App\Http\Resources\Country\phoneCodeListResource;
 use App\Http\Resources\Country\NationalityListResource;
 
-/*
-Todo:    - get country List
-Todo:    - get country detail
-Todo:    - create country
-Todo:    - update country
-Todo:    - delete country
-
-Todo:    - get nationality list
-Todo:    - get currency code list
-Todo:    - get phone code list
-*/
-
 class CountryController extends Controller
 {
     function index()

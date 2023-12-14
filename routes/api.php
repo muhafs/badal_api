@@ -5,6 +5,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Number;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CountryController;
+use App\Http\Controllers\Api\ProvinceController;
 
 Route::controller(CountryController::class)->group(function () {
     Route::get('country', 'index');
@@ -16,6 +17,14 @@ Route::controller(CountryController::class)->group(function () {
     Route::get('nationality', 'nationalities');
     Route::get('currency', 'currencies');
     Route::get('phonecode', 'phoneCodes');
+});
+
+Route::controller(ProvinceController::class)->group(function () {
+    Route::get('province', 'index');
+    Route::get('province/{id}', 'show');
+    Route::post('province', 'store');
+    Route::post('province/{id}', 'update');
+    Route::delete('province/{id}', 'destroy');
 });
 
 
