@@ -22,8 +22,8 @@ return new class extends Migration
             $table->text('image_porfile')->nullable();
             $table->enum('type', ['ADM', 'PRF', 'SKR'])->default('SKR'); // Performer - Seeker
 
-            $table->foreignId('address')->nullable()->constrained('addresses')->nullOnDelete();
-            $table->foreignId('nationality')->nullable()->constrained('countries')->nullOnDelete();
+            $table->foreignId('address_id')->nullable()->constrained('addresses')->nullOnDelete();
+            $table->foreignId('nationality_id')->nullable()->constrained('countries')->nullOnDelete();
 
             $table->timestamps();
         });

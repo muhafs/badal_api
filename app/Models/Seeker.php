@@ -13,6 +13,6 @@ class Seeker extends Model
 
     function user()
     {
-        return $this->belongsTo(User::class, 'user');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

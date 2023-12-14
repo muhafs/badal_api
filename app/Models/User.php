@@ -14,22 +14,22 @@ class User extends Authenticatable
     // Relationship
     function address()
     {
-        return $this->belongsTo(Address::class, 'address');
+        return $this->belongsTo(Address::class, 'address_id');
     }
 
     function contact()
     {
-        return $this->hasOne(Contact::class, 'user');
+        return $this->hasOne(Contact::class, 'user_id');
     }
 
     function seeker()
     {
-        return $this->hasOne(Seeker::class, 'user');
+        return $this->hasOne(Seeker::class, 'user_id');
     }
 
     function performer()
     {
-        return $this->hasOne(Performer::class, 'user');
+        return $this->hasOne(Performer::class, 'user_id');
     }
 
     // Methods

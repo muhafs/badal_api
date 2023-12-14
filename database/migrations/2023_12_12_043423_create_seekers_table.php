@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('seekers', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user')->nullable()->constrained('users');
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->string('hajj_name')->nullable();
 
             $table->integer('price');
