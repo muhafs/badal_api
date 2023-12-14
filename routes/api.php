@@ -11,11 +11,14 @@ Route::controller(CountryController::class)->group(function () {
     Route::get('country/{id}', 'show');
     Route::post('country', 'store');
     Route::post('country/{id}', 'update');
+    Route::delete('country/{id}', 'destroy');
 
     Route::get('nationality', 'nationalities');
     Route::get('currency', 'currencies');
     Route::get('phonecode', 'phoneCodes');
 });
+
+
 
 // Route::post('seeker', function (Request $request) {
 //     return [

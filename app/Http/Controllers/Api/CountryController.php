@@ -14,20 +14,20 @@ use App\Http\Resources\Country\CurrencyListResource;
 use App\Http\Resources\Country\phoneCodeListResource;
 use App\Http\Resources\Country\NationalityListResource;
 
+/*
+Todo:    - get country List
+Todo:    - get country detail
+Todo:    - create country
+Todo:    - update country
+Todo:    - delete country
+
+Todo:    - get nationality list
+Todo:    - get currency code list
+Todo:    - get phone code list
+*/
+
 class CountryController extends Controller
 {
-    /*
-    Todo:    - get country List
-    Todo:    - get country detail
-    Todo:    - create country
-    Todo:    - update country
-    Todo:    - delete country
-
-    Todo:    - get nationality list
-    Todo:    - get currency code list
-    Todo:    - get phone code list
-    */
-
     function index()
     {
         $countries = Country::all();
@@ -86,6 +86,23 @@ class CountryController extends Controller
         } else {
             return response()->json([
                 'message' => 'Something went Error while Updating Country'
+            ], 400);
+        }
+    }
+
+    function destroy(GetCountryRequest $request)
+    {
+        $country = Country::find($request->id);
+
+        $country->delete();
+
+        if ($country) {
+            return response()->json([
+                'message' => 'Success Delete Country'
+            ], 201);
+        } else {
+            return response()->json([
+                'message' => 'Something went Error while Deleting Country'
             ], 400);
         }
     }
