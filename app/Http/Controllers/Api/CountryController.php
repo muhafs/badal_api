@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CountryResource;
-use App\Http\Requests\GetCountryRequest;
-use App\Http\Requests\StoreCountryRequest;
-use App\Http\Requests\UpdateCountryRequest;
-use App\Http\Resources\CountryListResource;
-use App\Http\Resources\CurrencyListResource;
-use App\Http\Resources\phoneCodeListResource;
-use App\Http\Resources\NationalityListResource;
+use App\Http\Resources\Country\CountryResource;
+use App\Http\Requests\Country\GetCountryRequest;
+use App\Http\Requests\Country\StoreCountryRequest;
+use App\Http\Requests\Country\UpdateCountryRequest;
+use App\Http\Resources\Country\CountryListResource;
+use App\Http\Resources\Country\CurrencyListResource;
+use App\Http\Resources\Country\phoneCodeListResource;
+use App\Http\Resources\Country\NationalityListResource;
 
 class CountryController extends Controller
 {
