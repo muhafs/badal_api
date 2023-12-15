@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Province;
+namespace App\Http\Requests\City;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateProvinceRequest extends FormRequest
+class GetCityRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -20,25 +20,17 @@ class UpdateProvinceRequest extends FormRequest
         ]);
     }
 
-    public function rules(): array
+    public function rules()
     {
-        return [
-            'id' => 'required|numeric|exists:provinces,id',
-            'name' => 'required|string',
-            'country_id' => 'nullable|numeric|exists:countries,id',
-        ];
+        return ['id' => 'required|numeric|exists:cities,id'];
     }
 
     public function messages()
     {
         return [
-            'id.required' => 'Province is missing',
-            'id.numeric' => 'Province is invalid',
-            'id.exists' => 'No Province found',
-
-            'name.required' => 'Province Name can\'t be Empty',
-
-            'country_id.exists' => 'no Country found',
+            'required' => 'City is missing',
+            'numeric' => 'City is invalid',
+            'exists' => 'No City found'
         ];
     }
 
@@ -49,7 +41,7 @@ class UpdateProvinceRequest extends FormRequest
                 [
                     'message' => $validator->errors()->first(),
                 ],
-                400
+                404
             )
         );
     }

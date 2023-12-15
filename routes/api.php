@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Number;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\ProvinceController;
 
@@ -25,6 +26,14 @@ Route::controller(ProvinceController::class)->group(function () {
     Route::post('province', 'store');
     Route::post('province/{id}', 'update');
     Route::delete('province/{id}', 'destroy');
+});
+
+Route::controller(CityController::class)->group(function () {
+    Route::get('city', 'index');
+    Route::get('city/{id}', 'show');
+    Route::post('city', 'store');
+    Route::post('city/{id}', 'update');
+    Route::delete('city/{id}', 'destroy');
 });
 
 
