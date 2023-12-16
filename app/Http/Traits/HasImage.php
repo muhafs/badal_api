@@ -4,13 +4,13 @@ namespace App\Http\Traits;
 
 trait HasImage
 {
-    function uploadImage($request, $as, $disk)
+    function uploadImage($request, $folderName, $disk = 'public')
     {
         // create unique filename
-        $imageName = str($as)->upper() . '_' . time() . '.' . $request->image->extension();
+        $imageName = str($folderName)->upper() . '_' . time() . '.' . $request->image->extension();
 
         // store image in APP
-        $request->file('image')->storeAs(str($as)->lower(), $imageName, $disk);
+        $request->file('image')->storeAs(str($folderName)->lower(), $imageName, $disk);
 
         return $imageName;
     }
