@@ -18,6 +18,6 @@ class Address extends Model
 
     public function users()
     {
-        return $this->hasMany(User::class, 'address_id');
+        return $this->hasOne(User::class, 'address_id');
     }
 }

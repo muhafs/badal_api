@@ -5,6 +5,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Number;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CityController;
+use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\ProvinceController;
 
@@ -36,6 +37,13 @@ Route::controller(CityController::class)->group(function () {
     Route::delete('city/{id}', 'destroy');
 });
 
+Route::controller(AddressController::class)->group(function () {
+    Route::get('address', 'index');
+    Route::get('address/{id}', 'show');
+    Route::post('address', 'store');
+    Route::post('address/{id}', 'update');
+    Route::delete('address/{id}', 'destroy');
+});
 
 
 // Route::post('seeker', function (Request $request) {
@@ -55,6 +63,7 @@ Route::controller(CityController::class)->group(function () {
 
 //         "address" => str()->title($request->address),
 //         "city" => str()->title($request->city),
+//         "province" => str()->title($request->province),
 //         "country" => str()->title($request->country),
 //         "postcode" => $request->postcode,
 //         "nationality" => str()->title($request->nationality),
