@@ -46,11 +46,12 @@ Route::controller(AddressController::class)->group(function () {
     Route::delete('address/{id}', 'destroy');
 });
 
+//TODO: has to be done
 Route::controller(SeekerController::class)->group(function () {
-    Route::get('seeker', 'index');
-    Route::get('seeker/{id}', 'show');
+    // Route::get('seeker', 'index');
+    // Route::get('seeker/{id}', 'show');
     Route::post('seeker', 'store');
-    Route::post('seeker/{id}', 'update');
+    // Route::post('seeker/{id}', 'update');
     Route::delete('seeker/{id}', 'destroy');
 });
 

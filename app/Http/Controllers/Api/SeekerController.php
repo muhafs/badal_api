@@ -19,13 +19,15 @@ class SeekerController extends Controller
 {
     use HasJsonResponse;
 
+    //TODO: has to be done
     function index()
     {
-        $seekers = SeekerListResource::collection(Seeker::available()->get());
+        $seekers = SeekerListResource::collection(Seeker::available()->with('user')->get());
 
         return $this->jsonResponse("Success", $seekers);
     }
 
+    //TODO: has to be done
     function show(GetSeekerRequest $request)
     {
         $seeker = new SeekerResource(Seeker::available()->where('id', $request->id)->get());
@@ -38,9 +40,9 @@ class SeekerController extends Controller
         $user = User::create([
             'type' => 'SKR',
             'first_name' => str($request->first_name)->ucfirst()->trim(),
-            'last_name' => str($request->last_name ?? null)->ucfirst()->trim(),
+            'last_name' => str($request->last_name)->trim()->isEmpty() ? null : str($request->last_name)->ucfirst()->trim(),
             'gender' => str($request->gender)->upper()->trim(),
-            "birth_date" => (new Carbon('12-10-1975'))->toDateString(),
+            "birth_date" => (new Carbon($request->birth_date))->toDateString(),
             'image_porfile' => $imageName ?? null,
             'nationality_id' => $request->nationality_id,
         ]);
@@ -51,7 +53,7 @@ class SeekerController extends Controller
 
         $seeker = Seeker::create([
             'user_id' => $user->id,
-            'hajj_name' => str($request->hajj_name)->title()->squish(),
+            'hajj_name' => str($request->hajj_name)->trim()->isEmpty() ? null : str($request->hajj_name)->title()->squish(),
             'currency' => str($request->currency)->upper()->trim(),
             'price' => $request->price,
         ]);
@@ -62,12 +64,12 @@ class SeekerController extends Controller
 
         $contact = Contact::create([
             'user_id' => $user->id,
-            'email' => $request->email,
-            'phone_code' => '+' . str($request->phone_code)->trim(),
+            'email' => $request->email ?? null,
+            'phone_code' => str($request->phone_code)->trim(),
             'phone_number' => str($request->phone_number)->trim(),
-            'whatsapp' => str($request->whatsapp)->trim(),
-            'instagram' => str($request->instagram)->lower()->trim(),
-            'facebook' => str($request->facebook)->squish()
+            'whatsapp' => str($request->whatsapp)->trim()->isEmpty() ? null : str($request->whatsapp)->trim(),
+            'instagram' => str($request->instagram)->trim()->isEmpty() ? null : str($request->instagram)->lower()->trim(),
+            'facebook' => str($request->facebook)->trim()->isEmpty() ? null : str($request->facebook)->squish()
         ]);
 
         if (!$contact) {
@@ -88,27 +90,28 @@ class SeekerController extends Controller
         return $this->jsonResponse("Success Create Seeker", $seeker, 201);
     }
 
-    function update(UpdateSeekerRequest $request)
-    {
-        $seeker = Seeker::find($request->id);
+    //TODO: has to be done 
+    // function update(UpdateSeekerRequest $request)
+    // {
+    //     $seeker = Seeker::find($request->id);
 
-        $seeker->update([
-            'name' => str($request->name ?? $seeker->name)->title()->squish(),
-            'country_id' => $request->country_id ?? $seeker->country_id
-        ]);
+    //     $seeker->update([
+    //         'name' => str($request->name ?? $seeker->name)->title()->squish(),
+    //         'country_id' => $request->country_id ?? $seeker->country_id
+    //     ]);
 
-        if (!$seeker) {
-            $this->throwResponse("Something went Error while Updating Seeker");
-        }
+    //     if (!$seeker) {
+    //         $this->throwResponse("Something went Error while Updating Seeker");
+    //     }
 
-        return $this->jsonResponse("Success Update Seeker", $seeker, 201);
-    }
+    //     return $this->jsonResponse("Success Update Seeker", $seeker, 201);
+    // }
 
     function destroy(GetSeekerRequest $request)
     {
         $seeker = Seeker::find($request->id);
 
-        $seeker->delete();
+        $seeker->user->delete();
 
         if (!$seeker) {
             $this->throwResponse("Something went Error while Deleting Seeker");

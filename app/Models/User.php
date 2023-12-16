@@ -10,6 +10,7 @@ class User extends Authenticatable
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $with = ['contact', 'address'];
 
     // Relationship
     function address()

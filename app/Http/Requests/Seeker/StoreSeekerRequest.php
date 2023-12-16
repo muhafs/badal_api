@@ -22,18 +22,18 @@ class StoreSeekerRequest extends FormRequest
             "last_name" => 'nullable|string',
             "gender" => 'required|string|max:1|in:M,F,m,f',
             "birth_date" => 'nullable|date',
-            "nationality" => 'required|numeric|exists:cities,id',
+            "nationality_id" => 'required|numeric|exists:cities,id',
 
             "hajj_name" => 'nullable|string|max:32',
             "currency" => 'required|string|max:3',
             "price" => 'required|integer',
 
-            "email" => 'nullable|email',
+            "email" => 'nullable|email|unique:contacts,email',
             "phone_code" => 'required|numeric',
-            "phone_number" => 'required|numeric',
-            "whatsapp" => 'nullable|numeric',
-            "instagram" => 'nullable|string',
-            "facebook" => 'nullable|string',
+            "phone_number" => 'required|numeric|unique:contacts,phone_number',
+            "whatsapp" => 'nullable|numeric|unique:contacts,whatsapp',
+            "instagram" => 'nullable|string|unique:contacts,instagram',
+            "facebook" => 'nullable|string|unique:contacts,facebook',
 
             "address" => 'required|string',
             "postcode" => 'nullable|string|max:10',
@@ -41,6 +41,7 @@ class StoreSeekerRequest extends FormRequest
         ];
     }
 
+    //TODO: has to be done
     public function messages()
     {
         return [
