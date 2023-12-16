@@ -19,14 +19,14 @@ class AddressController extends Controller
     {
         $addresses = AddressListResource::collection(Address::with('city', 'user')->get());
 
-        $this->jsonResponse(200, 'Success', $addresses);
+        return $this->jsonResponse(200, 'Success', $addresses);
     }
 
     function show(GetAddressRequest $request)
     {
         $address = new AddressResource(Address::with('city', 'user')->find($request->id));
 
-        $this->jsonResponse(200, 'Success', $address);
+        return $this->jsonResponse(200, 'Success', $address);
     }
 
     function store(StoreAddressRequest $request)
@@ -37,11 +37,11 @@ class AddressController extends Controller
             'city_id' => $request->city_id
         ]);
 
-        if ($address) {
-            $this->jsonResponse(201, 'Success Create Address', $address);
-        } else {
-            $this->errorResponse(400, 'Something went Error while Creating Address');
+        if (!$address) {
+            $this->throwResponse(400, 'Something went Error while Creating Address');
         }
+
+        return $this->jsonResponse(201, 'Success Create Address', $address);
     }
 
     function update(UpdateAddressRequest $request)
@@ -54,11 +54,11 @@ class AddressController extends Controller
             'city_id' => $request->city_id ?? $address->city_id
         ]);
 
-        if ($address) {
-            $this->jsonResponse(201, 'Success Update Address', $address);
-        } else {
-            $this->errorResponse(400, 'Something went Error while Updating Address');
+        if (!$address) {
+            $this->throwResponse(400, 'Something went Error while Updating Address');
         }
+
+        return $this->jsonResponse(201, 'Success Update Address', $address);
     }
 
     function destroy(GetAddressRequest $request)
@@ -67,10 +67,10 @@ class AddressController extends Controller
 
         $address->delete();
 
-        if ($address) {
-            $this->jsonResponse(201, 'Success Delete Address', $address);
-        } else {
-            $this->errorResponse(400, 'Something went Error while Deleting Address');
+        if (!$address) {
+            $this->throwResponse(400, 'Something went Error while Deleting Address');
         }
+
+        return $this->jsonResponse(201, 'Success Delete Address', $address);
     }
 }

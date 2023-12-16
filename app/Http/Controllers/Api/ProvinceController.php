@@ -19,14 +19,14 @@ class ProvinceController extends Controller
     {
         $provinces = ProvinceListResource::collection(Province::with('country')->get());
 
-        $this->jsonResponse(200, "Success", $provinces);
+        return $this->jsonResponse(200, "Success", $provinces);
     }
 
     function show(GetProvinceRequest $request)
     {
         $province = new ProvinceResource(Province::with('country')->find($request->id));
 
-        $this->jsonResponse(200, "Success", $province);
+        return $this->jsonResponse(200, "Success", $province);
     }
 
     function store(StoreProvinceRequest $request)
@@ -36,11 +36,11 @@ class ProvinceController extends Controller
             'country_id' => $request->country_id
         ]);
 
-        if ($province) {
-            $this->jsonResponse(201, "Success Create Province", $province);
-        } else {
-            $this->errorResponse(400, "Something went Error while Creating Province");
+        if (!$province) {
+            $this->throwResponse(400, "Something went Error while Creating Province");
         }
+
+        return $this->jsonResponse(201, "Success Create Province", $province);
     }
 
     function update(UpdateProvinceRequest $request)
@@ -52,11 +52,11 @@ class ProvinceController extends Controller
             'country_id' => $request->country_id ?? $province->country_id
         ]);
 
-        if ($province) {
-            $this->jsonResponse(201, "Success Update Province", $province);
-        } else {
-            $this->errorResponse(400, "Something went Error while Updating Province");
+        if (!$province) {
+            $this->throwResponse(400, "Something went Error while Updating Province");
         }
+
+        return $this->jsonResponse(201, "Success Update Province", $province);
     }
 
     function destroy(GetProvinceRequest $request)
@@ -65,10 +65,10 @@ class ProvinceController extends Controller
 
         $province->delete();
 
-        if ($province) {
-            $this->jsonResponse(201, "Success Delete Province", $province);
-        } else {
-            $this->errorResponse(400, "Something went Error while Deleting Province");
+        if (!$province) {
+            $this->throwResponse(400, "Something went Error while Deleting Province");
         }
+
+        return $this->jsonResponse(201, "Success Delete Province", $province);
     }
 }

@@ -23,14 +23,14 @@ class CountryController extends Controller
     {
         $countries = CountryListResource::collection(Country::all());
 
-        $this->jsonResponse(200, 'Success', $countries);
+        return $this->jsonResponse(200, 'Success', $countries);
     }
 
     function show(GetCountryRequest $request)
     {
         $country = new CountryResource(Country::find($request->id));
 
-        $this->jsonResponse(200, 'Success', $country);
+        return $this->jsonResponse(200, 'Success', $country);
     }
 
     function store(StoreCountryRequest $request)
@@ -42,11 +42,11 @@ class CountryController extends Controller
             'phone_code' => ($request->phone_code),
         ]);
 
-        if ($country) {
-            $this->jsonResponse(201, 'Success Create Country', $country);
-        } else {
-            $this->errorResponse(400, 'Something went Error while Creating Country');
+        if (!$country) {
+            $this->throwResponse(400, 'Something went Error while Creating Country');
         }
+
+        return $this->jsonResponse(201, 'Success Create Country', $country);
     }
 
     function update(UpdateCountryRequest $request)
@@ -60,11 +60,11 @@ class CountryController extends Controller
             'phone_code' => ($request->phone_code ?? $country->phone_code),
         ]);
 
-        if ($country) {
-            $this->jsonResponse(201, 'Success Update Country', $country);
-        } else {
-            $this->errorResponse(400, 'Something went Error while Updating Country');
+        if (!$country) {
+            $this->throwResponse(400, 'Something went Error while Updating Country');
         }
+
+        return $this->jsonResponse(201, 'Success Update Country', $country);
     }
 
     function destroy(GetCountryRequest $request)
@@ -73,31 +73,31 @@ class CountryController extends Controller
 
         $country->delete();
 
-        if ($country) {
-            $this->jsonResponse(201, 'Success Delete Country', $country);
-        } else {
-            $this->errorResponse(400, 'Something went Error while Deleting Country');
+        if (!$country) {
+            $this->throwResponse(400, 'Something went Error while Deleting Country');
         }
+
+        return $this->jsonResponse(201, 'Success Delete Country', $country);
     }
 
     function nationalities()
     {
         $nationalities = NationalityListResource::collection(Country::all());
 
-        $this->jsonResponse(200, 'Success', $nationalities);
+        return $this->jsonResponse(200, 'Success', $nationalities);
     }
 
     function currencies()
     {
         $currencies = CurrencyListResource::collection(Country::all());
 
-        $this->jsonResponse(200, 'Success', $currencies);
+        return $this->jsonResponse(200, 'Success', $currencies);
     }
 
     function phoneCodes()
     {
         $phoneCodes = phoneCodeListResource::collection(Country::all());
 
-        $this->jsonResponse(200, 'Success', $phoneCodes);
+        return $this->jsonResponse(200, 'Success', $phoneCodes);
     }
 }

@@ -19,14 +19,14 @@ class CityController extends Controller
     {
         $cities = CityListResource::collection(City::with('province')->get());
 
-        $this->jsonResponse(200, 'Success', $cities);
+        return $this->jsonResponse(200, 'Success', $cities);
     }
 
     function show(GetCityRequest $request)
     {
         $city = new CityResource(City::with('province')->find($request->id));
 
-        $this->jsonResponse(200, 'Success', $city);
+        return $this->jsonResponse(200, 'Success', $city);
     }
 
     function store(StoreCityRequest $request)
@@ -36,11 +36,11 @@ class CityController extends Controller
             'province_id' => $request->province_id
         ]);
 
-        if ($city) {
-            $this->jsonResponse(201, 'Success Create City', $city);
-        } else {
-            $this->errorResponse(400, 'Something went Error while Creating City');
+        if (!$city) {
+            $this->throwResponse(400, 'Something went Error while Creating City');
         }
+
+        return $this->jsonResponse(201, 'Success Create City', $city);
     }
 
     function update(UpdateCityRequest $request)
@@ -52,11 +52,11 @@ class CityController extends Controller
             'province_id' => $request->province_id ?? $city->province_id
         ]);
 
-        if ($city) {
-            $this->jsonResponse(201, 'Success Update City', $city);
-        } else {
-            $this->errorResponse(400, 'Something went Error while Updating City');
+        if (!$city) {
+            $this->throwResponse(400, 'Something went Error while Updating City');
         }
+
+        return $this->jsonResponse(201, 'Success Update City', $city);
     }
 
     function destroy(GetCityRequest $request)
@@ -65,10 +65,10 @@ class CityController extends Controller
 
         $city->delete();
 
-        if ($city) {
-            $this->jsonResponse(201, 'Success Delete City', $city);
-        } else {
-            $this->errorResponse(400, 'Something went Error while Deleting City');
+        if (!$city) {
+            $this->throwResponse(400, 'Something went Error while Deleting City');
         }
+
+        return $this->jsonResponse(201, 'Success Delete City', $city);
     }
 }

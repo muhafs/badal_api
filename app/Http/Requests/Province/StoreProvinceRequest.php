@@ -35,6 +35,6 @@ class StoreProvinceRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        $this->errorResponse(400, $validator->errors()->first());
+        $this->throwResponse(400, $validator->errors()->first());
     }
 }

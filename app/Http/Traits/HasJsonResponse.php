@@ -17,7 +17,7 @@ trait HasJsonResponse
         );
     }
 
-    function errorResponse($code, $message)
+    function throwResponse($code, $message)
     {
         throw new HttpResponseException(
             response()->json(

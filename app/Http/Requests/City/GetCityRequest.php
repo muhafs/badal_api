@@ -38,6 +38,6 @@ class GetCityRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        $this->errorResponse(404, $validator->errors()->first());
+        $this->throwResponse(404, $validator->errors()->first());
     }
 }
