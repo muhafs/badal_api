@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('seekers', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('hajj_name')->nullable();
 
             $table->string('currency', 3);
