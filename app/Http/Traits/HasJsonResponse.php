@@ -6,7 +6,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 trait HasJsonResponse
 {
-    function jsonResponse($message, $data = null, $code = 200)
+    function jsonResponse($message, $data = [], $code = 200)
     {
         return response()->json(
             [
