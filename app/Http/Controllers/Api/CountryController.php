@@ -23,14 +23,14 @@ class CountryController extends Controller
     {
         $countries = CountryListResource::collection(Country::all());
 
-        return $this->jsonResponse(200, 'Success', $countries);
+        return $this->jsonResponse('Success', $countries);
     }
 
     function show(GetCountryRequest $request)
     {
         $country = new CountryResource(Country::find($request->id));
 
-        return $this->jsonResponse(200, 'Success', $country);
+        return $this->jsonResponse('Success', $country);
     }
 
     function store(StoreCountryRequest $request)
@@ -43,10 +43,10 @@ class CountryController extends Controller
         ]);
 
         if (!$country) {
-            $this->throwResponse(400, 'Something went Error while Creating Country');
+            $this->throwResponse('Something went Error while Creating Country');
         }
 
-        return $this->jsonResponse(201, 'Success Create Country', $country);
+        return $this->jsonResponse('Success Create Country', $country, 201);
     }
 
     function update(UpdateCountryRequest $request)
@@ -61,10 +61,10 @@ class CountryController extends Controller
         ]);
 
         if (!$country) {
-            $this->throwResponse(400, 'Something went Error while Updating Country');
+            $this->throwResponse('Something went Error while Updating Country');
         }
 
-        return $this->jsonResponse(201, 'Success Update Country', $country);
+        return $this->jsonResponse('Success Update Country', $country, 201);
     }
 
     function destroy(GetCountryRequest $request)
@@ -74,30 +74,30 @@ class CountryController extends Controller
         $country->delete();
 
         if (!$country) {
-            $this->throwResponse(400, 'Something went Error while Deleting Country');
+            $this->throwResponse('Something went Error while Deleting Country');
         }
 
-        return $this->jsonResponse(201, 'Success Delete Country', $country);
+        return $this->jsonResponse('Success Delete Country', $country, 201);
     }
 
     function nationalities()
     {
         $nationalities = NationalityListResource::collection(Country::all());
 
-        return $this->jsonResponse(200, 'Success', $nationalities);
+        return $this->jsonResponse('Success', $nationalities);
     }
 
     function currencies()
     {
         $currencies = CurrencyListResource::collection(Country::all());
 
-        return $this->jsonResponse(200, 'Success', $currencies);
+        return $this->jsonResponse('Success', $currencies);
     }
 
     function phoneCodes()
     {
         $phoneCodes = phoneCodeListResource::collection(Country::all());
 
-        return $this->jsonResponse(200, 'Success', $phoneCodes);
+        return $this->jsonResponse('Success', $phoneCodes);
     }
 }

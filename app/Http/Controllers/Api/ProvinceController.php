@@ -19,14 +19,14 @@ class ProvinceController extends Controller
     {
         $provinces = ProvinceListResource::collection(Province::with('country')->get());
 
-        return $this->jsonResponse(200, "Success", $provinces);
+        return $this->jsonResponse("Success", $provinces);
     }
 
     function show(GetProvinceRequest $request)
     {
         $province = new ProvinceResource(Province::with('country')->find($request->id));
 
-        return $this->jsonResponse(200, "Success", $province);
+        return $this->jsonResponse("Success", $province);
     }
 
     function store(StoreProvinceRequest $request)
@@ -37,10 +37,10 @@ class ProvinceController extends Controller
         ]);
 
         if (!$province) {
-            $this->throwResponse(400, "Something went Error while Creating Province");
+            $this->throwResponse("Something went Error while Creating Province");
         }
 
-        return $this->jsonResponse(201, "Success Create Province", $province);
+        return $this->jsonResponse("Success Create Province", $province, 201);
     }
 
     function update(UpdateProvinceRequest $request)
@@ -53,10 +53,10 @@ class ProvinceController extends Controller
         ]);
 
         if (!$province) {
-            $this->throwResponse(400, "Something went Error while Updating Province");
+            $this->throwResponse("Something went Error while Updating Province");
         }
 
-        return $this->jsonResponse(201, "Success Update Province", $province);
+        return $this->jsonResponse("Success Update Province", $province, 201);
     }
 
     function destroy(GetProvinceRequest $request)
@@ -66,9 +66,9 @@ class ProvinceController extends Controller
         $province->delete();
 
         if (!$province) {
-            $this->throwResponse(400, "Something went Error while Deleting Province");
+            $this->throwResponse("Something went Error while Deleting Province");
         }
 
-        return $this->jsonResponse(201, "Success Delete Province", $province);
+        return $this->jsonResponse("Success Delete Province", $province, 201);
     }
 }

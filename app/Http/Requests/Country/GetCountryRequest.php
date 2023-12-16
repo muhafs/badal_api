@@ -37,6 +37,6 @@ class GetCountryRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        $this->throwResponse(404, $validator->errors()->first());
+        $this->throwResponse($validator->errors()->first(), 404);
     }
 }

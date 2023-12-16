@@ -6,10 +6,11 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 trait HasJsonResponse
 {
-    function jsonResponse($code, $message, $data = null)
+    function jsonResponse($message, $data = null, $code = 200)
     {
         return response()->json(
             [
+                'success' => true,
                 'message' => $message,
                 'data' => $data
             ],
@@ -17,11 +18,12 @@ trait HasJsonResponse
         );
     }
 
-    function throwResponse($code, $message)
+    function throwResponse($message, $code = 400)
     {
         throw new HttpResponseException(
             response()->json(
                 [
+                    'success' => false,
                     'message' => $message
                 ],
                 $code

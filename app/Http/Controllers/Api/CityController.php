@@ -19,14 +19,14 @@ class CityController extends Controller
     {
         $cities = CityListResource::collection(City::with('province')->get());
 
-        return $this->jsonResponse(200, 'Success', $cities);
+        return $this->jsonResponse('Success', $cities);
     }
 
     function show(GetCityRequest $request)
     {
         $city = new CityResource(City::with('province')->find($request->id));
 
-        return $this->jsonResponse(200, 'Success', $city);
+        return $this->jsonResponse('Success', $city);
     }
 
     function store(StoreCityRequest $request)
@@ -37,10 +37,10 @@ class CityController extends Controller
         ]);
 
         if (!$city) {
-            $this->throwResponse(400, 'Something went Error while Creating City');
+            $this->throwResponse('Something went Error while Creating City');
         }
 
-        return $this->jsonResponse(201, 'Success Create City', $city);
+        return $this->jsonResponse('Success Create City', $city, 201);
     }
 
     function update(UpdateCityRequest $request)
@@ -53,10 +53,10 @@ class CityController extends Controller
         ]);
 
         if (!$city) {
-            $this->throwResponse(400, 'Something went Error while Updating City');
+            $this->throwResponse('Something went Error while Updating City');
         }
 
-        return $this->jsonResponse(201, 'Success Update City', $city);
+        return $this->jsonResponse('Success Update City', $city, 201);
     }
 
     function destroy(GetCityRequest $request)
@@ -66,9 +66,9 @@ class CityController extends Controller
         $city->delete();
 
         if (!$city) {
-            $this->throwResponse(400, 'Something went Error while Deleting City');
+            $this->throwResponse('Something went Error while Deleting City');
         }
 
-        return $this->jsonResponse(201, 'Success Delete City', $city);
+        return $this->jsonResponse('Success Delete City', $city, 201);
     }
 }

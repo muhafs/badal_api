@@ -46,6 +46,6 @@ class StoreCountryRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        $this->throwResponse(400, $validator->errors()->first());
+        $this->throwResponse($validator->errors()->first());
     }
 }

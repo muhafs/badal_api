@@ -19,14 +19,14 @@ class AddressController extends Controller
     {
         $addresses = AddressListResource::collection(Address::with('city', 'user')->get());
 
-        return $this->jsonResponse(200, 'Success', $addresses);
+        return $this->jsonResponse('Success', $addresses);
     }
 
     function show(GetAddressRequest $request)
     {
         $address = new AddressResource(Address::with('city', 'user')->find($request->id));
 
-        return $this->jsonResponse(200, 'Success', $address);
+        return $this->jsonResponse('Success', $address);
     }
 
     function store(StoreAddressRequest $request)
@@ -38,10 +38,10 @@ class AddressController extends Controller
         ]);
 
         if (!$address) {
-            $this->throwResponse(400, 'Something went Error while Creating Address');
+            $this->throwResponse('Something went Error while Creating Address');
         }
 
-        return $this->jsonResponse(201, 'Success Create Address', $address);
+        return $this->jsonResponse('Success Create Address', $address, 201);
     }
 
     function update(UpdateAddressRequest $request)
@@ -55,10 +55,10 @@ class AddressController extends Controller
         ]);
 
         if (!$address) {
-            $this->throwResponse(400, 'Something went Error while Updating Address');
+            $this->throwResponse('Something went Error while Updating Address');
         }
 
-        return $this->jsonResponse(201, 'Success Update Address', $address);
+        return $this->jsonResponse('Success Update Address', $address, 201);
     }
 
     function destroy(GetAddressRequest $request)
@@ -68,9 +68,9 @@ class AddressController extends Controller
         $address->delete();
 
         if (!$address) {
-            $this->throwResponse(400, 'Something went Error while Deleting Address');
+            $this->throwResponse('Something went Error while Deleting Address');
         }
 
-        return $this->jsonResponse(201, 'Success Delete Address', $address);
+        return $this->jsonResponse('Success Delete Address', $address, 201);
     }
 }
