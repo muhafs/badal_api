@@ -16,8 +16,8 @@ class Address extends Model
         return $this->belongsTo(City::class, 'city_id');
     }
 
-    public function users()
+    public function user()
     {
-        return $this->hasOne(User::class, 'address_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -5,6 +5,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Number;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CityController;
+use App\Http\Controllers\Api\SeekerController;
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\ProvinceController;
@@ -43,6 +44,14 @@ Route::controller(AddressController::class)->group(function () {
     Route::post('address', 'store');
     Route::post('address/{id}', 'update');
     Route::delete('address/{id}', 'destroy');
+});
+
+Route::controller(SeekerController::class)->group(function () {
+    Route::get('seeker', 'index');
+    Route::get('seeker/{id}', 'show');
+    Route::post('seeker', 'store');
+    Route::post('seeker/{id}', 'update');
+    Route::delete('seeker/{id}', 'destroy');
 });
 
 

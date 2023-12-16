@@ -17,12 +17,11 @@ return new class extends Migration
             $table->string('last_name')->nullable();
 
             $table->enum('gender', ['M', 'F'])->default('M');
-            $table->date('birth_date');
+            $table->date('birth_date')->nullable();
 
             $table->text('image_porfile')->nullable();
             $table->enum('type', ['ADM', 'PRF', 'SKR'])->default('SKR'); // Performer - Seeker
 
-            $table->foreignId('address_id')->nullable()->constrained('addresses')->nullOnDelete();
             $table->foreignId('nationality_id')->nullable()->constrained('countries')->nullOnDelete();
 
             $table->timestamps();

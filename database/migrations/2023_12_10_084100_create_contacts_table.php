@@ -16,9 +16,10 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
 
             $table->string('email')->nullable()->unique();
+            $table->string('phone_code');
             $table->string('phone_number', 20)->unique();
 
-            $table->string('whatsapp')->nullable()->unique();
+            $table->string('whatsapp', 20)->nullable()->unique();
             $table->string('instagram')->nullable()->unique();
             $table->string('facebook')->nullable()->unique();
 

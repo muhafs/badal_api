@@ -14,7 +14,7 @@ class User extends Authenticatable
     // Relationship
     function address()
     {
-        return $this->belongsTo(Address::class, 'address_id');
+        return $this->hasOne(Address::class, 'user_id');
     }
 
     function contact()
