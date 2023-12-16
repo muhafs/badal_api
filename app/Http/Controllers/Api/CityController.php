@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\City;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\HasJsonResponse;
 use App\Http\Resources\City\CityResource;
 use App\Http\Requests\City\GetCityRequest;
 use App\Http\Requests\City\StoreCityRequest;
@@ -12,24 +13,20 @@ use App\Http\Resources\City\CityListResource;
 
 class CityController extends Controller
 {
+    use HasJsonResponse;
+
     function index()
     {
-        $cities = City::with('province')->get();
+        $cities = CityListResource::collection(City::with('province')->get());
 
-        return response()->json([
-            'message' => 'Success',
-            'data' => CityListResource::collection($cities)
-        ], 200);
+        $this->jsonResponse(200, 'Success', $cities);
     }
 
     function show(GetCityRequest $request)
     {
-        $city = City::with('province')->find($request->id);
+        $city = new CityResource(City::with('province')->find($request->id));
 
-        return response()->json([
-            'message' => 'Success',
-            'data' => new CityResource($city)
-        ], 200);
+        $this->jsonResponse(200, 'Success', $city);
     }
 
     function store(StoreCityRequest $request)
@@ -40,13 +37,9 @@ class CityController extends Controller
         ]);
 
         if ($city) {
-            return response()->json([
-                'message' => 'Success Create City'
-            ], 201);
+            $this->jsonResponse(201, 'Success Create City', $city);
         } else {
-            return response()->json([
-                'message' => 'Something went Error while Creating City'
-            ], 400);
+            $this->errorResponse(400, 'Something went Error while Creating City');
         }
     }
 
@@ -60,13 +53,9 @@ class CityController extends Controller
         ]);
 
         if ($city) {
-            return response()->json([
-                'message' => 'Success Update City'
-            ], 201);
+            $this->jsonResponse(201, 'Success Update City', $city);
         } else {
-            return response()->json([
-                'message' => 'Something went Error while Updating City'
-            ], 400);
+            $this->errorResponse(400, 'Something went Error while Updating City');
         }
     }
 
@@ -77,13 +66,9 @@ class CityController extends Controller
         $city->delete();
 
         if ($city) {
-            return response()->json([
-                'message' => 'Success Delete City'
-            ], 201);
+            $this->jsonResponse(201, 'Success Delete City', $city);
         } else {
-            return response()->json([
-                'message' => 'Something went Error while Deleting City'
-            ], 400);
+            $this->errorResponse(400, 'Something went Error while Deleting City');
         }
     }
 }

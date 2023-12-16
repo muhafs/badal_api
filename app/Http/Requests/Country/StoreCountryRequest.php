@@ -2,15 +2,14 @@
 
 namespace App\Http\Requests\Country;
 
+use App\Http\Traits\HasJsonResponse;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreCountryRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+    use HasJsonResponse;
+
     public function authorize(): bool
     {
         return true;
@@ -47,13 +46,6 @@ class StoreCountryRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(
-            response()->json(
-                [
-                    'message' => $validator->errors()->first(),
-                ],
-                400
-            )
-        );
+        $this->errorResponse(400, $validator->errors()->first());
     }
 }

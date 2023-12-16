@@ -2,12 +2,14 @@
 
 namespace App\Http\Requests\Province;
 
+use App\Http\Traits\HasJsonResponse;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class GetProvinceRequest extends FormRequest
 {
+    use HasJsonResponse;
+
     public function authorize(): bool
     {
         return true;
@@ -36,13 +38,6 @@ class GetProvinceRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(
-            response()->json(
-                [
-                    'message' => $validator->errors()->first(),
-                ],
-                404
-            )
-        );
+        $this->errorResponse(404, $validator->errors()->first());
     }
 }

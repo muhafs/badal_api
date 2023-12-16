@@ -2,13 +2,15 @@
 
 namespace App\Http\Requests\City;
 
+use App\Http\Traits\HasJsonResponse;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreCityRequest extends FormRequest
 {
-    public function authorize(): bool
+    use HasJsonResponse;
+
+    public function authorize()
     {
         return true;
     }
@@ -33,13 +35,6 @@ class StoreCityRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(
-            response()->json(
-                [
-                    'message' => $validator->errors()->first(),
-                ],
-                400
-            )
-        );
+        $this->errorResponse(400, $validator->errors()->first());
     }
 }

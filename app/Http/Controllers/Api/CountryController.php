@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\HasJsonResponse;
 use App\Http\Resources\Country\CountryResource;
 use App\Http\Requests\Country\GetCountryRequest;
 use App\Http\Requests\Country\StoreCountryRequest;
@@ -16,24 +17,20 @@ use App\Http\Resources\Country\NationalityListResource;
 
 class CountryController extends Controller
 {
+    use HasJsonResponse;
+
     function index()
     {
-        $countries = Country::all();
+        $countries = CountryListResource::collection(Country::all());
 
-        return response()->json([
-            'message' => 'Success',
-            'data' => CountryListResource::collection($countries),
-        ], 200);
+        $this->jsonResponse(200, 'Success', $countries);
     }
 
     function show(GetCountryRequest $request)
     {
-        $country = Country::find($request->id);
+        $country = new CountryResource(Country::find($request->id));
 
-        return response()->json([
-            'message' => 'Success',
-            'data' => new CountryResource($country),
-        ], 200);
+        $this->jsonResponse(200, 'Success', $country);
     }
 
     function store(StoreCountryRequest $request)
@@ -46,13 +43,9 @@ class CountryController extends Controller
         ]);
 
         if ($country) {
-            return response()->json([
-                'message' => 'Success Create Country'
-            ], 201);
+            $this->jsonResponse(201, 'Success Create Country', $country);
         } else {
-            return response()->json([
-                'message' => 'Something went Error while Creating Country'
-            ], 400);
+            $this->errorResponse(400, 'Something went Error while Creating Country');
         }
     }
 
@@ -68,13 +61,9 @@ class CountryController extends Controller
         ]);
 
         if ($country) {
-            return response()->json([
-                'message' => 'Success Update Country'
-            ], 201);
+            $this->jsonResponse(201, 'Success Update Country', $country);
         } else {
-            return response()->json([
-                'message' => 'Something went Error while Updating Country'
-            ], 400);
+            $this->errorResponse(400, 'Something went Error while Updating Country');
         }
     }
 
@@ -85,13 +74,9 @@ class CountryController extends Controller
         $country->delete();
 
         if ($country) {
-            return response()->json([
-                'message' => 'Success Delete Country'
-            ], 201);
+            $this->jsonResponse(201, 'Success Delete Country', $country);
         } else {
-            return response()->json([
-                'message' => 'Something went Error while Deleting Country'
-            ], 400);
+            $this->errorResponse(400, 'Something went Error while Deleting Country');
         }
     }
 
@@ -99,29 +84,20 @@ class CountryController extends Controller
     {
         $nationalities = NationalityListResource::collection(Country::all());
 
-        return response()->json([
-            'message' => 'Success',
-            'data' => $nationalities,
-        ], 200);
+        $this->jsonResponse(200, 'Success', $nationalities);
     }
 
     function currencies()
     {
         $currencies = CurrencyListResource::collection(Country::all());
 
-        return response()->json([
-            'message' => 'Success',
-            'data' => $currencies,
-        ], 200);
+        $this->jsonResponse(200, 'Success', $currencies);
     }
 
     function phoneCodes()
     {
         $phoneCodes = phoneCodeListResource::collection(Country::all());
 
-        return response()->json([
-            'message' => 'Success',
-            'data' => $phoneCodes,
-        ], 200);
+        $this->jsonResponse(200, 'Success', $phoneCodes);
     }
 }

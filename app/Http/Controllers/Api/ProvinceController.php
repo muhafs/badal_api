@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Province;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\HasJsonResponse;
 use App\Http\Resources\Province\ProvinceResource;
 use App\Http\Requests\Province\GetProvinceRequest;
 use App\Http\Requests\Province\StoreProvinceRequest;
@@ -12,24 +13,20 @@ use App\Http\Resources\Province\ProvinceListResource;
 
 class ProvinceController extends Controller
 {
+    use HasJsonResponse;
+
     function index()
     {
-        $provinces = Province::with('country')->get();
+        $provinces = ProvinceListResource::collection(Province::with('country')->get());
 
-        return response()->json([
-            'message' => 'Success',
-            'data' => ProvinceListResource::collection($provinces)
-        ], 200);
+        $this->jsonResponse(200, "Success", $provinces);
     }
 
     function show(GetProvinceRequest $request)
     {
-        $province = Province::with('country')->find($request->id);
+        $province = new ProvinceResource(Province::with('country')->find($request->id));
 
-        return response()->json([
-            'message' => 'Success',
-            'data' => new ProvinceResource($province)
-        ], 200);
+        $this->jsonResponse(200, "Success", $province);
     }
 
     function store(StoreProvinceRequest $request)
@@ -40,13 +37,9 @@ class ProvinceController extends Controller
         ]);
 
         if ($province) {
-            return response()->json([
-                'message' => 'Success Create Province'
-            ], 201);
+            $this->jsonResponse(201, "Success Create Province", $province);
         } else {
-            return response()->json([
-                'message' => 'Something went Error while Creating Province'
-            ], 400);
+            $this->errorResponse(400, "Something went Error while Creating Province");
         }
     }
 
@@ -60,13 +53,9 @@ class ProvinceController extends Controller
         ]);
 
         if ($province) {
-            return response()->json([
-                'message' => 'Success Update Province'
-            ], 201);
+            $this->jsonResponse(201, "Success Update Province", $province);
         } else {
-            return response()->json([
-                'message' => 'Something went Error while Updating Province'
-            ], 400);
+            $this->errorResponse(400, "Something went Error while Updating Province");
         }
     }
 
@@ -77,13 +66,9 @@ class ProvinceController extends Controller
         $province->delete();
 
         if ($province) {
-            return response()->json([
-                'message' => 'Success Delete Province'
-            ], 201);
+            $this->jsonResponse(201, "Success Delete Province", $province);
         } else {
-            return response()->json([
-                'message' => 'Something went Error while Deleting Province'
-            ], 400);
+            $this->errorResponse(400, "Something went Error while Deleting Province");
         }
     }
 }
