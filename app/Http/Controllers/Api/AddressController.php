@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Address;
+use App\Http\Traits\ResponseJson;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Address\AddressResource;
 use App\Http\Requests\Address\GetAddressRequest;
@@ -12,24 +13,28 @@ use App\Http\Resources\Address\AddressListResource;
 
 class AddressController extends Controller
 {
+    use ResponseJson;
+
     function index()
     {
         $addresses = Address::with('city', 'user')->get();
 
-        return response()->json([
-            'message' => 'Success',
-            'data' => AddressListResource::collection($addresses)
-        ], 200);
+        $this->successJson(
+            'Success',
+            AddressListResource::collection($addresses),
+            200
+        );
     }
 
     function show(GetAddressRequest $request)
     {
         $address = Address::with('city', 'user')->find($request->id);
 
-        return response()->json([
-            'message' => 'Success',
-            'data' => new AddressResource($address)
-        ], 200);
+        $this->successJson(
+            'Success',
+            new AddressResource($address),
+            200
+        );
     }
 
     function store(StoreAddressRequest $request)
@@ -41,13 +46,13 @@ class AddressController extends Controller
         ]);
 
         if ($address) {
-            return response()->json([
-                'message' => 'Success Create Address'
-            ], 201);
+            $this->successJson(
+                'Success Create Address',
+                $address,
+                201
+            );
         } else {
-            return response()->json([
-                'message' => 'Something went Error while Creating Address'
-            ], 400);
+            $this->errorJson('Something went Error while Creating Address', 400);
         }
     }
 
@@ -62,13 +67,13 @@ class AddressController extends Controller
         ]);
 
         if ($address) {
-            return response()->json([
-                'message' => 'Success Update Address'
-            ], 201);
+            $this->successJson(
+                'Success Update Address',
+                $address,
+                201
+            );
         } else {
-            return response()->json([
-                'message' => 'Something went Error while Updating Address'
-            ], 400);
+            $this->errorJson('Something went Error while Updating Address', 400);
         }
     }
 
@@ -79,13 +84,13 @@ class AddressController extends Controller
         $address->delete();
 
         if ($address) {
-            return response()->json([
-                'message' => 'Success Delete Address'
-            ], 201);
+            $this->successJson(
+                'Success Delete Address',
+                $address,
+                201
+            );
         } else {
-            return response()->json([
-                'message' => 'Something went Error while Deleting Address'
-            ], 400);
+            $this->errorJson('Something went Error while Deleting Address', 400);
         }
     }
 }
