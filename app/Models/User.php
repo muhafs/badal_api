@@ -13,6 +13,11 @@ class User extends Authenticatable
     protected $with = ['contact', 'address'];
 
     // Relationship
+    function nationality()
+    {
+        return $this->belongsTo(Country::class, 'nationality_id');
+    }
+
     function address()
     {
         return $this->hasOne(Address::class, 'user_id');

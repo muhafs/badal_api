@@ -16,8 +16,8 @@ class Seeker extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    function scopeAvailable($query)
+    function scopeAvailable($query, $bool = 1)
     {
-        return $query->where('available', 1);
+        return $query->where('available', $bool);
     }
 }

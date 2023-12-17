@@ -30,7 +30,7 @@ class SeekerController extends Controller
     //TODO: has to be done
     function show(GetSeekerRequest $request)
     {
-        $seeker = new SeekerResource(Seeker::available()->where('id', $request->id)->get());
+        $seeker = new SeekerResource(Seeker::available()->with('user')->find($request->id));
 
         return $this->jsonResponse("Success", $seeker);
     }
@@ -90,7 +90,7 @@ class SeekerController extends Controller
         return $this->jsonResponse("Success Create Seeker", $seeker, 201);
     }
 
-    //TODO: has to be done 
+    //TODO: has to be done
     // function update(UpdateSeekerRequest $request)
     // {
     //     $seeker = Seeker::find($request->id);
