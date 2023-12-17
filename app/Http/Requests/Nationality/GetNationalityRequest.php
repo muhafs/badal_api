@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Country;
+namespace App\Http\Requests\Nationality;
 
 use App\Http\Traits\HasJsonResponse;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class GetCountryRequest extends FormRequest
+class GetNationalityRequest extends FormRequest
 {
     use HasJsonResponse;
 
@@ -14,24 +14,25 @@ class GetCountryRequest extends FormRequest
     {
         return true;
     }
+
     protected function prepareForValidation()
     {
         $this->merge([
-            'id' => $this->route('country'),
+            'id' => $this->route('id'),
         ]);
     }
 
     public function rules()
     {
-        return ['id' => 'required|numeric|exists:countries,id'];
+        return ['id' => 'required|numeric|exists:nationalities,id'];
     }
 
     public function messages()
     {
         return [
-            'required' => 'Country is missing',
-            'numeric' => 'Country is invalid',
-            'exists' => 'No Country found'
+            'required' => 'Nationality is missing',
+            'numeric' => 'Nationality is invalid',
+            'exists' => 'No Nationality found'
         ];
     }
 

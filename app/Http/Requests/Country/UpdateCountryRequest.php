@@ -18,7 +18,7 @@ class UpdateCountryRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'id' => $this->route('id'),
+            'id' => $this->route('country'),
         ]);
     }
 
@@ -27,7 +27,6 @@ class UpdateCountryRequest extends FormRequest
         return [
             'id' => 'required|numeric|exists:countries,id',
             'name' => 'required|string|unique:countries,name,' . $this->id,
-            'nationality' => 'required|string|unique:countries,nationality,' . $this->id,
             'phone_code' => 'required|numeric|unique:countries,phone_code,' . $this->id,
             'currency_code' => 'required|string|max:3|unique:countries,currency_code,' . $this->id,
         ];
@@ -42,9 +41,6 @@ class UpdateCountryRequest extends FormRequest
 
             'name.required' => 'Country Name can\'t be Empty',
             'name.unique' => 'This name has already taken',
-
-            'nationality.required' => 'Nationality can\'t be Empty',
-            'nationality.unique' => 'this nationality has already taken',
 
             'phone_code.required' => 'Phone code can\'t be Empty',
             'phone_code.numeric' => 'Phone code must be a number',

@@ -15,7 +15,7 @@ class User extends Authenticatable
     // Relationship
     function nationality()
     {
-        return $this->belongsTo(Country::class, 'nationality_id');
+        return $this->belongsTo(Nationality::class, 'nationality_id');
     }
 
     function address()

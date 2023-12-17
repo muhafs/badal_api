@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Country;
+namespace App\Http\Resources\Nationality;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,8 +16,8 @@ class NationalityListResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "nationality" => $this->nationality,
-            "country" => $this->name,
+            "name" => $this->name,
+            "country_id" => $this->country_id,
         ];
     }
 }

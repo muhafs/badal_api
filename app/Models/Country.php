@@ -16,8 +16,8 @@ class Country extends Model
         return $this->hasMany(Province::class, 'country_id');
     }
 
-    function users()
+    function nationality()
     {
-        return $this->hasMany(User::class, 'nationality_id');
+        return $this->hasOne(Nationality::class, 'country_id');
     }
 }

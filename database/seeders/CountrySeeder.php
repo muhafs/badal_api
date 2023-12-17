@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Country;
+use App\Models\Nationality;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -18,11 +19,15 @@ class CountrySeeder extends Seeder
         $chaptersRow = true;
         while (($data = fgetcsv($csvData, null, ',')) !== false) {
             if (!$chaptersRow) {
-                Country::create([
+                $country = Country::create([
                     'name' => str($data['0'])->title()->squish(),
-                    'nationality' => str($data['1'])->title()->squish(),
                     'currency_code' => str($data['2'])->upper()->trim(),
                     'phone_code' => $data['3'],
+                ]);
+
+                Nationality::create([
+                    'name' => str($data['1'])->title()->squish(),
+                    'country_id' => $country->id,
                 ]);
             }
             $chaptersRow = false;

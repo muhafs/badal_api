@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Country;
+namespace App\Http\Resources\Nationality;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\Country\CountryResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CountryListResource extends JsonResource
+class NationalityResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +17,8 @@ class CountryListResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "name" => $this->name
+            "name" => $this->name,
+            "country" => new CountryResource($this->country),
         ];
     }
 }

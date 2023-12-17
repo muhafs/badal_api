@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('image_porfile')->nullable();
             $table->enum('type', ['ADM', 'PRF', 'SKR'])->default('SKR'); // Performer - Seeker
 
-            $table->foreignId('nationality_id')->nullable()->constrained('countries')->nullOnDelete();
+            $table->foreignId('nationality_id')->nullable()->constrained()->nullOnDelete();
 
             $table->timestamps();
         });

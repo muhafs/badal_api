@@ -22,7 +22,7 @@ class StoreSeekerRequest extends FormRequest
             "last_name" => "nullable|string",
             "gender" => "required|string|max:1|in:M,F,m,f",
             "birth_date" => "nullable|date",
-            "nationality_id" => "required|numeric|exists:cities,id",
+            "nationality_id" => "required|numeric|exists:nationalities,id",
 
             "hajj_name" => "nullable|string|max:32",
             "currency" => "required|string|max:3",
