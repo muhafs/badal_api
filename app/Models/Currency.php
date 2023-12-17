@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Address extends Model
+class Currency extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    public function city()
+    function country()
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(Country::class);
     }
 
-    public function user()
+    function offers()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Seeker::class);
     }
 }

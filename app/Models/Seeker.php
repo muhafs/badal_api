@@ -13,7 +13,12 @@ class Seeker extends Model
 
     function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
+    }
+
+    function currency()
+    {
+        return $this->belongsTo(Currency::class);
     }
 
     function scopeAvailable($query, $bool = 1)

@@ -11,13 +11,23 @@ class Country extends Model
 
     protected $guarded = ['id'];
 
-    function provinces()
-    {
-        return $this->hasMany(Province::class, 'country_id');
-    }
-
     function nationality()
     {
-        return $this->hasOne(Nationality::class, 'country_id');
+        return $this->hasOne(Nationality::class);
+    }
+
+    function currency()
+    {
+        return $this->hasOne(Currency::class);
+    }
+
+    function phone()
+    {
+        return $this->hasOne(Phone::class);
+    }
+
+    function provinces()
+    {
+        return $this->hasMany(Province::class);
     }
 }

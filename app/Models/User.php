@@ -15,27 +15,27 @@ class User extends Authenticatable
     // Relationship
     function nationality()
     {
-        return $this->belongsTo(Nationality::class, 'nationality_id');
+        return $this->belongsTo(Nationality::class);
     }
 
     function address()
     {
-        return $this->hasOne(Address::class, 'user_id');
+        return $this->hasOne(Address::class);
     }
 
     function contact()
     {
-        return $this->hasOne(Contact::class, 'user_id');
+        return $this->hasOne(Contact::class);
     }
 
     function seeker()
     {
-        return $this->hasOne(Seeker::class, 'user_id');
+        return $this->hasOne(Seeker::class);
     }
 
     function performer()
     {
-        return $this->hasOne(Performer::class, 'user_id');
+        return $this->hasOne(Performer::class);
     }
 
     // Methods
