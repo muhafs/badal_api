@@ -23,7 +23,7 @@ class SeekerResource extends JsonResource
             "first_name" => $this->user->first_name,
             "last_name" => $this->user->last_name,
 
-            "full_name" => $this->when($this->user->last_name, "{$this->user->first_name} {$this->user->last_name}", null),
+            "full_name" => $this->when($this->user->last_name, "{$this->user->first_name} {$this->user->last_name}", $this->user->first_name),
             "hajj_name" => $this->hajj_name,
 
             "type" => "Seeker",
@@ -42,7 +42,7 @@ class SeekerResource extends JsonResource
             "phone_number" => $this->user->contact->phone_number,
 
             "whatsapp" => $this->user->contact->whatsapp,
-            "instagram" => $this->user->contact->instagram,
+            "instagram" => $this->when($this->user->contact->instagram, "@{$this->user->contact->instagram}", null),
             "facebook" => $this->user->contact->facebook,
 
             "address" => $this->user->address->address,

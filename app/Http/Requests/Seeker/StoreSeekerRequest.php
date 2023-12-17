@@ -50,6 +50,8 @@ class StoreSeekerRequest extends FormRequest
             "gender.required" => "Gender is missing",
             "gender.*" => "Gender is invalid",
 
+            "birth_date.date" => "Birth date format is invalid",
+
             "nationality_id.required" => "Nationality is missing",
             "nationality_id.*" => "Nationality is invalid",
 

@@ -89,7 +89,7 @@ class SeekerController extends Controller
             $this->throwResponse("Something went Error while Creating Seeker Address");
         }
 
-        return $this->jsonResponse("Success Create Seeker", $seeker, 201);
+        return $this->jsonResponse("Success Create Seeker", $user, 201);
     }
 
     //TODO: has to be done
@@ -97,10 +97,18 @@ class SeekerController extends Controller
     // {
     //     $seeker = Seeker::find($request->id);
 
-    //     $seeker->update([
-    //         'name' => str($request->name ?? $seeker->name)->title()->squish(),
-    //         'country_id' => $request->country_id ?? $seeker->country_id
+    //     $user = $seeker->user->update([
+    //         'first_name' => str($request->first_name)->ucfirst()->trim(),
+    //         'last_name' => str($request->last_name)->trim()->isEmpty() ? null : str($request->last_name)->ucfirst()->trim(),
+    //         'gender' => str($request->gender)->upper()->trim(),
+    //         "birth_date" => Carbon::make($request->birth_date)->toDateString(),
+    //         'image_porfile' => $imageName ?? null,
+    //         'nationality_id' => $request->nationality_id,
     //     ]);
+
+    //     if (!$user) {
+    //         $this->throwResponse("Something went Error while Creating Seeker User");
+    //     }
 
     //     if (!$seeker) {
     //         $this->throwResponse("Something went Error while Updating Seeker");
