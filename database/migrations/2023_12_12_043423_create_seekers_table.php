@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('seekers', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('hajj_name')->nullable();
 
-            $table->string('currency', 3);
+            $table->foreignId('currency_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('price');
 
             $table->boolean('available')->default(true);

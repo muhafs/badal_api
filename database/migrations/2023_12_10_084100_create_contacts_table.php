@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
 
-            $table->string('email')->nullable()->unique();
-            $table->string('phone_code');
+            $table->foreignId('phone_code_id')->nullable()->constrained('phones')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('phone_number', 20)->unique();
 
+            $table->string('email')->nullable()->unique();
             $table->string('whatsapp', 20)->nullable()->unique();
             $table->string('instagram')->nullable()->unique();
             $table->string('facebook')->nullable()->unique();
