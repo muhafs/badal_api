@@ -19,7 +19,6 @@ class SeekerController extends Controller
 {
     use HasJsonResponse;
 
-    //TODO: has to be done
     function index()
     {
         $seekers = SeekerListResource::collection(Seeker::available()->with('user')->get());
@@ -27,10 +26,13 @@ class SeekerController extends Controller
         return $this->jsonResponse("Success", $seekers);
     }
 
-    //TODO: has to be done
     function show(GetSeekerRequest $request)
     {
-        $seeker = new SeekerResource(Seeker::available()->with('user')->find($request->id));
+        $seeker = new SeekerResource(Seeker::with('user')->find($request->id));
+
+        if (!$seeker->available) {
+            $this->throwResponse('This Seeker not Available.', 404);
+        }
 
         return $this->jsonResponse("Success", $seeker);
     }
@@ -42,7 +44,7 @@ class SeekerController extends Controller
             'first_name' => str($request->first_name)->ucfirst()->trim(),
             'last_name' => str($request->last_name)->trim()->isEmpty() ? null : str($request->last_name)->ucfirst()->trim(),
             'gender' => str($request->gender)->upper()->trim(),
-            "birth_date" => (new Carbon($request->birth_date))->toDateString(),
+            "birth_date" => Carbon::make($request->birth_date)->toDateString(),
             'image_porfile' => $imageName ?? null,
             'nationality_id' => $request->nationality_id,
         ]);

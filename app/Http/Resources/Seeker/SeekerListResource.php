@@ -23,7 +23,7 @@ class SeekerListResource extends JsonResource
             "first_name" => $this->user->first_name,
             "last_name" => $this->user->last_name,
 
-            "gender" => $this->user->gender,
+            "gender" => str($this->user->gender)->is("M") ? 'Male' : 'Female',
             "nationality" => $this->user->nationality->nationality,
 
             "currency" => $this->currency,
