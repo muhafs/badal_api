@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
 
             $table->string('name')->unique();
-            $table->string('code')->unique();
+
+            $table->string('short_code', 2)->unique();
+            $table->string('long_code', 3)->unique();
 
             $table->timestamps();
         });
