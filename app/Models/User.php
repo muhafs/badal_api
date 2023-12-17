@@ -41,6 +41,6 @@ class User extends Authenticatable
     // Methods
     function getImageURL()
     {
-        return $this->image_porfile ? url('storage/user/' . $this->image_porfile) : url('storage/default.png');
+        return $this->image ? url('storage/user/' . $this->image) : url('storage/default.png');
     }
 }

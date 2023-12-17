@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('gender', ['M', 'F'])->default('M');
             $table->date('birth_date')->nullable();
 
-            $table->text('image_porfile')->nullable();
+            $table->text('image')->nullable();
             $table->enum('type', ['ADM', 'PRF', 'SKR'])->default('SKR'); // Performer - Seeker
 
             $table->foreignId('nationality_id')->nullable()->constrained()->nullOnDelete();
