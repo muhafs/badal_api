@@ -1,84 +1,40 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Number;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CityController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\PhoneController;
 use App\Http\Controllers\Api\SeekerController;
 use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\CountryController;
+use App\Http\Controllers\Api\CurrencyController;
 use App\Http\Controllers\Api\ProvinceController;
+use App\Http\Controllers\Api\PerformerController;
+use App\Http\Controllers\Api\NationalityController;
 
-Route::controller(CountryController::class)->group(function () {
-    Route::get('country', 'index');
-    Route::get('country/{id}', 'show');
-    Route::post('country', 'store');
-    Route::post('country/{id}', 'update');
-    Route::delete('country/{id}', 'destroy');
-
-    Route::get('nationality', 'nationalities');
-    Route::get('currency', 'currencies');
-    Route::get('phonecode', 'phoneCodes');
+Route::get('test', function () {
+    //
 });
 
-Route::controller(ProvinceController::class)->group(function () {
-    Route::get('province', 'index');
-    Route::get('province/{id}', 'show');
-    Route::post('province', 'store');
-    Route::post('province/{id}', 'update');
-    Route::delete('province/{id}', 'destroy');
-});
+Route::apiResource('country', CountryController::class);
 
-Route::controller(CityController::class)->group(function () {
-    Route::get('city', 'index');
-    Route::get('city/{id}', 'show');
-    Route::post('city', 'store');
-    Route::post('city/{id}', 'update');
-    Route::delete('city/{id}', 'destroy');
-});
+Route::apiResource('nationality', NationalityController::class);
 
-Route::controller(AddressController::class)->group(function () {
-    Route::get('address', 'index');
-    Route::get('address/{id}', 'show');
-    Route::post('address', 'store');
-    Route::post('address/{id}', 'update');
-    Route::delete('address/{id}', 'destroy');
-});
+Route::apiResource('phone', PhoneController::class);
 
-//TODO: has to be done
-Route::controller(SeekerController::class)->group(function () {
-    Route::get('seeker', 'index');
-    Route::get('seeker/{id}', 'show');
-    Route::post('seeker', 'store');
-    // Route::post('seeker/{id}', 'update');
-    Route::delete('seeker/{id}', 'destroy');
-});
+Route::apiResource('currency', CurrencyController::class);
 
+Route::apiResource('province', ProvinceController::class);
 
-// Route::post('seeker', function (Request $request) {
-//     return [
-//         "type" => str()->upper(($request->type)),
-//         "first_name" => $request->first_name,
-//         "last_name" => $request->last_name,
+Route::apiResource('city', CityController::class);
 
-//         "gender" => str()->upper($request->gender),
-//         "birth_date" => (new Carbon('12-10-1975'))->toDateString(),
+Route::apiResource('address', AddressController::class);
 
-//         "email" => $request->email,
-//         "phone_number" => $request->phone_code . $request->phone_number,
-//         "whatsapp" => $request->whatsapp,
-//         "instagram" => $request->instagram,
-//         "facebook" => $request->facebook,
+Route::apiResource('user', UserController::class);
 
-//         "address" => str()->title($request->address),
-//         "city" => str()->title($request->city),
-//         "province" => str()->title($request->province),
-//         "country" => str()->title($request->country),
-//         "postcode" => $request->postcode,
-//         "nationality" => str()->title($request->nationality),
+Route::apiResource('contact', ContactController::class);
 
-//         "hajj_name" => str()->title($request->hajj_name),
-//         "price" => Number::currency($request->price, $request->currency),
-//     ];
-// });
+Route::apiResource('seeker', SeekerController::class);
+
+Route::apiResource('performer', PerformerController::class);
