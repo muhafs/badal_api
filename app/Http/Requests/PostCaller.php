@@ -47,6 +47,7 @@ class PostCaller
     public function call()
     {
         $response = app($this->class)->{$this->method}($this->requestClass::createFromBase($this->requestSending));
+
         return $response;
     }
 }
