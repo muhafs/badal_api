@@ -1,10 +1,4 @@
-name,nationality,currency_code,phone_code
-indonesia,indonesian,idr,62
-saudi arabia,saudi,sar,966
-malaysia,malaysian,myr,60
-india,indian,inr,91
-Pakistan,Pakistani	,pkr,92
-egypt,Egyptian,EGP,20
-Turkey,Turkish,TRY,90
-United States,American,USD,1
-United Kingdom,British,GBP,44
+﻿name,short_code,long_code
+indonesia,id,idn
+saudi arabia,sa,ksa
+united states of america,us,usa

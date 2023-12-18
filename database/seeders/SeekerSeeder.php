@@ -2,27 +2,27 @@
 
 namespace Database\Seeders;
 
-use App\Models\Country;
-use App\Models\Nationality;
+use App\Models\Seeker;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class CountrySeeder extends Seeder
+class SeekerSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $csvData = fopen(base_path("local_db/countries.csv"), 'r');
+        $csvData = fopen(base_path("local_db/seekers.csv"), 'r');
 
         $chaptersRow = true;
         while (($data = fgetcsv($csvData, null, ',')) !== false) {
             if (!$chaptersRow) {
-                Country::create([
-                    'name' => str($data['0'])->title()->squish(),
-                    'short_code' => str($data['1'])->upper()->trim(),
-                    'long_code' => str($data['2'])->upper()->trim()
+                Seeker::create([
+                    'user_id' => $data['0'],
+                    'hajj_name' => str($data['1'])->trim()->isEmpty() ? null : str($data['1'])->title()->squish(),
+                    'currency_id' => $data['2'],
+                    'price' => $data['3'],
                 ]);
             }
             $chaptersRow = false;

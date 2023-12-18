@@ -2,27 +2,26 @@
 
 namespace Database\Seeders;
 
-use App\Models\Country;
-use App\Models\Nationality;
+use App\Models\Currency;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class CountrySeeder extends Seeder
+class CurrencySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $csvData = fopen(base_path("local_db/countries.csv"), 'r');
+        $csvData = fopen(base_path("local_db/currencies.csv"), 'r');
 
         $chaptersRow = true;
         while (($data = fgetcsv($csvData, null, ',')) !== false) {
             if (!$chaptersRow) {
-                Country::create([
+                Currency::create([
                     'name' => str($data['0'])->title()->squish(),
-                    'short_code' => str($data['1'])->upper()->trim(),
-                    'long_code' => str($data['2'])->upper()->trim()
+                    'code' => str($data['1'])->upper()->trim(),
+                    'country_id' => $data['2']
                 ]);
             }
             $chaptersRow = false;
