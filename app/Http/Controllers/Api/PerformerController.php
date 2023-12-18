@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Performer;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\HasJsonResponse;
 use App\Http\Resources\Performer\PerformerResource;
