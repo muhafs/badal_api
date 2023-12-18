@@ -19,9 +19,9 @@ class StoreCountryRequest extends FormRequest
     {
         return [
             'name' => 'required|string|unique:countries,name',
-            'nationality' => 'required|string|unique:nationalities,name',
-            'phone_code' => 'required|numeric|unique:countries,phone_code',
-            'currency_code' => 'required|string|max:3|unique:countries,currency_code',
+            'nationality_name' => 'required|string|unique:nationalities,name',
+            'short_code' => 'required|string|unique:countries,short_code|min:2|max:2',
+            'long_code' => 'required|string|unique:countries,long_code|min:3|max:3',
         ];
     }
 
@@ -34,13 +34,13 @@ class StoreCountryRequest extends FormRequest
             'nationality.required' => 'Nationality can\'t be Empty',
             'nationality.unique' => 'this nationality has already taken',
 
-            'phone_code.required' => 'Phone code can\'t be Empty',
-            'phone_code.numeric' => 'Phone code must be a number',
-            'phone_code.unique' => 'this Phone code has already taken',
+            'short_code.required' => 'Short code can\'t be Empty',
+            'short_code.unique' => 'this Short code has already taken',
+            'short_code.*' => 'Short code should be 2 characters',
 
-            'currency_code.required' => 'Currency code can\'t be Empty',
-            'currency_code.max' => 'Currency code has to be 3 Characters',
-            'currency_code.unique' => 'this Currency code has already taken',
+            'long_code.required' => 'Long code can\'t be Empty',
+            'long_code.unique' => 'this Long code has already taken',
+            'long_code.*' => 'Long code should be 3 characters'
         ];
     }
 
