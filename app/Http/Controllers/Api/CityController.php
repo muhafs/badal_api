@@ -17,14 +17,14 @@ class CityController extends Controller
 
     function index()
     {
-        $cities = CityListResource::collection(City::with('province')->get());
+        $cities = CityListResource::collection(City::all());
 
         return $this->jsonResponse('Success', $cities);
     }
 
     function show(GetCityRequest $request)
     {
-        $city = new CityResource(City::with('province')->find($request->id));
+        $city = new CityResource(City::find($request->id));
 
         return $this->jsonResponse('Success', $city);
     }
@@ -48,8 +48,8 @@ class CityController extends Controller
         $city = City::find($request->id);
 
         $city->update([
-            'name' => str($request->name ?? $city->name)->title()->squish(),
-            'province_id' => $request->province_id ?? $city->province_id
+            'name' => str($request->name)->title()->squish(),
+            'province_id' => $request->province_id
         ]);
 
         if (!$city) {
@@ -61,9 +61,7 @@ class CityController extends Controller
 
     function destroy(GetCityRequest $request)
     {
-        $city = City::find($request->id);
-
-        $city->delete();
+        $city = City::destroy($request->id);
 
         if (!$city) {
             $this->throwResponse('Something went Error while Deleting City');

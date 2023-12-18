@@ -2,48 +2,71 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Phone;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Traits\HasJsonResponse;
+use App\Http\Resources\Phone\PhoneResource;
+use App\Http\Requests\Phone\GetPhoneRequest;
+use App\Http\Requests\Phone\StorePhoneRequest;
+use App\Http\Requests\Phone\UpdatePhoneRequest;
+use App\Http\Resources\Phone\PhoneListResource;
 
 class PhoneController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    use HasJsonResponse;
+
+    function index()
     {
-        //
+        $phones = PhoneListResource::collection(Phone::all());
+
+        return $this->jsonResponse("Success", $phones);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    function show(GetPhoneRequest $request)
     {
-        //
+        $phone = new PhoneResource(Phone::find($request->id));
+
+        return $this->jsonResponse("Success", $phone);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    function store(StorePhoneRequest $request)
     {
-        //
+        $phone = Phone::create([
+            "code" => $request->code,
+            "country_id" => $request->country_id,
+        ]);
+
+        if (!$phone) {
+            $this->throwResponse("Something went Error while Creating Phone");
+        }
+
+        return $this->jsonResponse("Success Create Phone", $phone, 201);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    function update(UpdatePhoneRequest $request)
     {
-        //
+        $phone = Phone::find($request->id);
+
+        $phone->update([
+            "code" => $request->code,
+            "country_id" => $request->country_id,
+        ]);
+
+        if (!$phone) {
+            $this->throwResponse("Something went Error while Updating Phone");
+        }
+
+        return $this->jsonResponse("Success Update Phone", $phone, 201);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    function destroy(GetPhoneRequest $request)
     {
-        //
+        $phone = Phone::destroy($request->id);
+
+        if (!$phone) {
+            $this->throwResponse("Something went Error while Deleting Phone");
+        }
+
+        return $this->jsonResponse("Success Delete Phone", $phone, 201);
     }
 }

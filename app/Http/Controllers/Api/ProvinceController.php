@@ -17,14 +17,14 @@ class ProvinceController extends Controller
 
     function index()
     {
-        $provinces = ProvinceListResource::collection(Province::with('country')->get());
+        $provinces = ProvinceListResource::collection(Province::all());
 
         return $this->jsonResponse("Success", $provinces);
     }
 
     function show(GetProvinceRequest $request)
     {
-        $province = new ProvinceResource(Province::with('country')->find($request->id));
+        $province = new ProvinceResource(Province::find($request->id));
 
         return $this->jsonResponse("Success", $province);
     }
@@ -48,8 +48,8 @@ class ProvinceController extends Controller
         $province = Province::find($request->id);
 
         $province->update([
-            'name' => str($request->name ?? $province->name)->title()->squish(),
-            'country_id' => $request->country_id ?? $province->country_id
+            'name' => str($request->name)->title()->squish(),
+            'country_id' => $request->country_id
         ]);
 
         if (!$province) {
@@ -61,9 +61,7 @@ class ProvinceController extends Controller
 
     function destroy(GetProvinceRequest $request)
     {
-        $province = Province::find($request->id);
-
-        $province->delete();
+        $province = Province::destroy($request->id);
 
         if (!$province) {
             $this->throwResponse("Something went Error while Deleting Province");

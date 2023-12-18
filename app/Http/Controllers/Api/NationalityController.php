@@ -48,7 +48,7 @@ class NationalityController extends Controller
         $nationality = Nationality::find($request->id);
 
         $nationality->update([
-            "name" => str($request->name)->title()->squish(),
+            "name" => str($request->name)->ucfirst()->trim(),
             "country_id" => $request->country_id,
         ]);
 

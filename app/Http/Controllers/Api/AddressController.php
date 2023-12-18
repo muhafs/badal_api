@@ -17,14 +17,14 @@ class AddressController extends Controller
 
     function index()
     {
-        $addresses = AddressListResource::collection(Address::with('city', 'user')->get());
+        $addresses = AddressListResource::collection(Address::all());
 
         return $this->jsonResponse('Success', $addresses);
     }
 
     function show(GetAddressRequest $request)
     {
-        $address = new AddressResource(Address::with('city', 'user')->find($request->id));
+        $address = new AddressResource(Address::find($request->id));
 
         return $this->jsonResponse('Success', $address);
     }
@@ -33,8 +33,9 @@ class AddressController extends Controller
     {
         $address = Address::create([
             'address' => str($request->address)->title()->squish(),
-            'postcode' => $request->postcode,
-            'city_id' => $request->city_id
+            'postcode' => str($request->postcode)->upper()->trim(),
+            'city_id' => $request->city_id,
+            'user_id' => $request->user_id
         ]);
 
         if (!$address) {
@@ -49,9 +50,10 @@ class AddressController extends Controller
         $address = Address::find($request->id);
 
         $address->update([
-            'address' => str($request->address ?? $address->address)->title()->squish(),
-            'postcode' => $request->postcode ?? $address->postcode,
-            'city_id' => $request->city_id ?? $address->city_id
+            'address' => str($request->address)->title()->squish(),
+            'postcode' => str($request->postcode)->upper()->trim(),
+            'city_id' => $request->city_id,
+            'user_id' => $request->user_id
         ]);
 
         if (!$address) {
@@ -63,9 +65,7 @@ class AddressController extends Controller
 
     function destroy(GetAddressRequest $request)
     {
-        $address = Address::find($request->id);
-
-        $address->delete();
+        $address = Address::destroy($request->id);
 
         if (!$address) {
             $this->throwResponse('Something went Error while Deleting Address');

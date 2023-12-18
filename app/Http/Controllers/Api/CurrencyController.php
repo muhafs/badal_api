@@ -4,48 +4,71 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Currency;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\HasJsonResponse;
 use App\Http\Requests\StoreCurrencyRequest;
 use App\Http\Requests\UpdateCurrencyRequest;
+use App\Http\Resources\Currency\CurrencyResource;
+use App\Http\Requests\Currency\GetCurrencyRequest;
+use App\Http\Resources\Currency\CurrencyListResource;
 
 class CurrencyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    use HasJsonResponse;
+
+    function index()
     {
-        //
+        $currencies = CurrencyListResource::collection(Currency::all());
+
+        return $this->jsonResponse("Success", $currencies);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCurrencyRequest $request)
+    function show(GetCurrencyRequest $request)
     {
-        //
+        $currency = new CurrencyResource(Currency::find($request->id));
+
+        return $this->jsonResponse("Success", $currency);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Currency $currency)
+    function store(StoreCurrencyRequest $request)
     {
-        //
+        $currency = Currency::create([
+            "name" => str($request->name)->title()->squish(),
+            "code" => str($request->code)->upper()->trim(),
+            "country_id" => $request->country_id,
+        ]);
+
+        if (!$currency) {
+            $this->throwResponse("Something went Error while Creating Currency");
+        }
+
+        return $this->jsonResponse("Success Create Currency", $currency, 201);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCurrencyRequest $request, Currency $currency)
+    function update(UpdateCurrencyRequest $request)
     {
-        //
+        $currency = Currency::find($request->id);
+
+        $currency->update([
+            "name" => str($request->name)->title()->squish(),
+            "code" => str($request->code)->upper()->trim(),
+            "country_id" => $request->country_id,
+        ]);
+
+        if (!$currency) {
+            $this->throwResponse("Something went Error while Updating Currency");
+        }
+
+        return $this->jsonResponse("Success Update Currency", $currency, 201);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Currency $currency)
+    function destroy(GetCurrencyRequest $request)
     {
-        //
+        $currency = Currency::destroy($request->id);
+
+        if (!$currency) {
+            $this->throwResponse("Something went Error while Deleting Currency");
+        }
+
+        return $this->jsonResponse("Success Delete Currency", $currency, 201);
     }
 }

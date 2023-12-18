@@ -2,48 +2,75 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\Performer;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Traits\HasJsonResponse;
+use App\Http\Resources\Performer\PerformerResource;
+use App\Http\Requests\Performer\GetPerformerRequest;
+use App\Http\Requests\Performer\StorePerformerRequest;
+use App\Http\Requests\Performer\UpdatePerformerRequest;
+use App\Http\Resources\Performer\PerformerListResource;
 
 class PerformerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    use HasJsonResponse;
+
+    function index()
     {
-        //
+        $performers = PerformerListResource::collection(Performer::all());
+
+        return $this->jsonResponse("Success", $performers);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    function show(GetPerformerRequest $request)
     {
-        //
+        $performer = new PerformerResource(Performer::find($request->id));
+
+        return $this->jsonResponse("Success", $performer);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    function store(StorePerformerRequest $request)
     {
-        //
+        $performer = Performer::create([
+            "user_id" => $request->user_id,
+            "nickname" => str($request->nickname)->trim()->isEmpty() ? null : str($request->nickname)->title()->squish(),
+            "bio" => str($request->bio)->trim()->isEmpty() ? null : str($request->bio)->ucfirst()->squish()
+        ]);
+
+        if (!$performer) {
+            $this->throwResponse("Something went Error while Creating Performer");
+        }
+
+        return $this->jsonResponse("Success Create Performer", $performer, 201);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    function update(UpdatePerformerRequest $request)
     {
-        //
+        $performer = Performer::find($request->id);
+
+        $performer->update([
+            "user_id" => $request->user_id,
+            "nickname" => $request->nickname,
+            "nickname" => str($request->nickname)->trim()->isEmpty() ? null : str($request->nickname)->title()->squish(),
+            "bio" => str($request->bio)->trim()->isEmpty() ? null : str($request->bio)->ucfirst()->squish()
+        ]);
+
+        if (!$performer) {
+            $this->throwResponse("Something went Error while Updating Performer");
+        }
+
+        return $this->jsonResponse("Success Update Performer", $performer, 201);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    function destroy(GetPerformerRequest $request)
     {
-        //
+        $performer = Performer::destroy($request->id);
+
+        if (!$performer) {
+            $this->throwResponse("Something went Error while Deleting Performer");
+        }
+
+        return $this->jsonResponse("Success Delete Performer", $performer, 201);
     }
 }

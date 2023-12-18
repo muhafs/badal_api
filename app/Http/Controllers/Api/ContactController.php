@@ -2,48 +2,81 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Contact;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Traits\HasJsonResponse;
+use App\Http\Resources\Contact\ContactResource;
+use App\Http\Requests\Contact\GetContactRequest;
+use App\Http\Requests\Contact\StoreContactRequest;
+use App\Http\Requests\Contact\UpdateContactRequest;
+use App\Http\Resources\Contact\ContactListResource;
 
 class ContactController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    use HasJsonResponse;
+
+    function index()
     {
-        //
+        $contacts = ContactListResource::collection(Contact::all());
+
+        return $this->jsonResponse("Success", $contacts);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    function show(GetContactRequest $request)
     {
-        //
+        $contact = new ContactResource(Contact::find($request->id));
+
+        return $this->jsonResponse("Success", $contact);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    function store(StoreContactRequest $request)
     {
-        //
+        $contact = Contact::create([
+            "user_id" => $request->user_id,
+            "phone_code_id" => $request->phone_code_id,
+            "phone_number" => str($request->phone_number)->trim(),
+            "email" => str($request->email)->trim(),
+            "whatsapp" => str($request->whatsapp)->trim(),
+            "instagram" => str($request->instagram)->lower()->trim(),
+            "facebook" => str($request->facebook)->title()->squish()
+        ]);
+
+        if (!$contact) {
+            $this->throwResponse("Something went Error while Creating Contact");
+        }
+
+        return $this->jsonResponse("Success Create Contact", $contact, 201);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    function update(UpdateContactRequest $request)
     {
-        //
+        $contact = Contact::find($request->id);
+
+        $contact->update([
+            "user_id" => $request->user_id,
+            "phone_code_id" => $request->phone_code_id,
+            "phone_number" => str($request->phone_number)->trim(),
+            "email" => str($request->email)->trim(),
+            "whatsapp" => str($request->whatsapp)->trim(),
+            "instagram" => str($request->instagram)->lower()->trim(),
+            "facebook" => str($request->facebook)->title()->squish()
+        ]);
+
+        if (!$contact) {
+            $this->throwResponse("Something went Error while Updating Contact");
+        }
+
+        return $this->jsonResponse("Success Update Contact", $contact, 201);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    function destroy(GetContactRequest $request)
     {
-        //
+        $contact = Contact::destroy($request->id);
+
+        if (!$contact) {
+            $this->throwResponse("Something went Error while Deleting Contact");
+        }
+
+        return $this->jsonResponse("Success Delete Contact", $contact, 201);
     }
 }

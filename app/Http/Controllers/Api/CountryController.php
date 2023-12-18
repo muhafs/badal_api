@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Country;
-use App\Models\Nationality;
-use App\Http\Requests\PostCaller;
+use App\Http\Traits\HasPusher;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\HasJsonResponse;
 use App\Http\Resources\Country\CountryResource;
@@ -12,13 +11,10 @@ use App\Http\Requests\Country\GetCountryRequest;
 use App\Http\Requests\Country\StoreCountryRequest;
 use App\Http\Requests\Country\UpdateCountryRequest;
 use App\Http\Resources\Country\CountryListResource;
-use App\Http\Resources\Country\CurrencyListResource;
-use App\Http\Resources\Country\phoneCodeListResource;
-use App\Http\Requests\Nationality\StoreNationalityRequest;
 
 class CountryController extends Controller
 {
-    use HasJsonResponse;
+    use HasJsonResponse, HasPusher;
 
     function index()
     {
@@ -46,16 +42,6 @@ class CountryController extends Controller
             $this->throwResponse("Something went Error while Creating Country");
         }
 
-        (new PostCaller(
-            NationalityController::class,
-            "store",
-            StoreNationalityRequest::class,
-            [
-                "name" => $request->nationality_name,
-                "country_id" => $country->id,
-            ]
-        ))->call();
-
         return $this->jsonResponse("Success Create Country", $country, 201);
     }
 
@@ -64,9 +50,9 @@ class CountryController extends Controller
         $country = Country::find($request->id);
 
         $country->update([
-            "name" => str($request->name ?? $country->name)->title()->squish(),
-            "currency_code" => str($request->currency_code ?? $country->currency_code)->upper()->trim(),
-            "phone_code" => ($request->phone_code ?? $country->phone_code),
+            "name" => str($request->name)->title()->squish(),
+            "short_code" => str($request->short_code)->upper()->trim(),
+            "long_code" => str($request->long_code)->upper()->trim(),
         ]);
 
         if (!$country) {
