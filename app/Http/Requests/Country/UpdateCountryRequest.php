@@ -27,8 +27,8 @@ class UpdateCountryRequest extends FormRequest
         return [
             'id' => 'required|numeric|exists:countries,id',
             'name' => 'required|string|unique:countries,name,' . $this->id,
-            'phone_code' => 'required|numeric|unique:countries,phone_code,' . $this->id,
-            'currency_code' => 'required|string|max:3|unique:countries,currency_code,' . $this->id,
+            'short_code' => 'required|string|min:2|max:2|unique:countries,short_code,' . $this->id,
+            'long_code' => 'required|string|min:3|max:3|unique:countries,long_code,' . $this->id,
         ];
     }
 
@@ -42,13 +42,13 @@ class UpdateCountryRequest extends FormRequest
             'name.required' => 'Country Name can\'t be Empty',
             'name.unique' => 'This name has already taken',
 
-            'phone_code.required' => 'Phone code can\'t be Empty',
-            'phone_code.numeric' => 'Phone code must be a number',
-            'phone_code.unique' => 'this Phone code has already taken',
+            'short_code.required' => 'Short code can\'t be Empty',
+            'short_code.unique' => 'this Short code has already taken',
+            'short_code.*' => 'Short code should be 2 characters',
 
-            'currency_code.required' => 'Currency code can\'t be Empty',
-            'currency_code.max' => 'Currency code has to be 3 Characters',
-            'currency_code.unique' => 'this Currency code has already taken',
+            'long_code.required' => 'Long code can\'t be Empty',
+            'long_code.unique' => 'this Long code has already taken',
+            'long_code.*' => 'Long code should be 3 characters'
         ];
     }
 

@@ -19,7 +19,6 @@ class StoreCountryRequest extends FormRequest
     {
         return [
             'name' => 'required|string|unique:countries,name',
-            'nationality_name' => 'required|string|unique:nationalities,name',
             'short_code' => 'required|string|unique:countries,short_code|min:2|max:2',
             'long_code' => 'required|string|unique:countries,long_code|min:3|max:3',
         ];
@@ -30,9 +29,6 @@ class StoreCountryRequest extends FormRequest
         return [
             'name.required' => 'Country Name can\'t be Empty',
             'name.unique' => 'This name has already taken',
-
-            'nationality.required' => 'Nationality can\'t be Empty',
-            'nationality.unique' => 'this nationality has already taken',
 
             'short_code.required' => 'Short code can\'t be Empty',
             'short_code.unique' => 'this Short code has already taken',
