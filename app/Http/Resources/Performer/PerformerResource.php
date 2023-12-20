@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Performer;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PerformerResource extends JsonResource
@@ -14,6 +15,11 @@ class PerformerResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "id" => $this->id,
+            "nickname" => $this->nickname,
+            "bio" => $this->bio,
+            "user" => new UserResource($this->whenLoaded("user")),
+        ];
     }
 }

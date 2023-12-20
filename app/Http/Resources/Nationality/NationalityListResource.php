@@ -17,7 +17,7 @@ class NationalityListResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
-            "country_id" => $this->country_id,
+            "country" => $this->country->name
         ];
     }
 }

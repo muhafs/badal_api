@@ -18,7 +18,7 @@ class CityResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'province' => new ProvinceResource($this->whenLoaded('province')),
+            'province' => new ProvinceResource($this->whenLoaded('province'))
         ];
     }
 }

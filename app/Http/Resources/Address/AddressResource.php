@@ -4,6 +4,7 @@ namespace App\Http\Resources\Address;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\City\CityResource;
+use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AddressResource extends JsonResource
@@ -17,9 +18,10 @@ class AddressResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'address' => $this->address,
             'postcode' => $this->postcode,
+            'address' => $this->address,
             'city' => new CityResource($this->whenLoaded('city')),
+            'user' => new UserResource($this->whenLoaded('user'))
         ];
     }
 }

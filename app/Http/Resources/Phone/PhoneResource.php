@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Phone;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\Country\CountryResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PhoneResource extends JsonResource
@@ -14,6 +15,10 @@ class PhoneResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "id" => $this->id,
+            "code" => "+{$this->code}",
+            "counry" => new CountryResource($this->whenLoaded("country"))
+        ];
     }
 }

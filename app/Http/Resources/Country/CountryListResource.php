@@ -16,7 +16,9 @@ class CountryListResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "name" => $this->name
+            "name" => $this->name,
+            "short_code" => $this->short_code,
+            "long_code" => $this->long_code
         ];
     }
 }

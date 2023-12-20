@@ -16,20 +16,14 @@ class SeekerListResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-
             "id" => $this->id,
-            "user_id" => $this->user_id,
-
-            "full_name" => $this->when($this->user->last_name, "{$this->user->first_name} {$this->user->last_name}", $this->user->first_name),
-
-            "gender" => str($this->user->gender)->is("M") ? 'Male' : 'Female',
-            "nationality" => $this->user->nationality->nationality,
-
-            "currency" => $this->currency,
-            "offer" => Number::currency($this->price, $this->currency),
-
             "available" => $this->available ? true : false,
-            "image_porfile" => $this->user->getImageURL(),
+            "hajj_name" => $this->hajj_name,
+
+            "offer" => Number::currency($this->price, $this->currency->code),
+
+            "currency" => $this->currency->code,
+            "user" => $this->user->first_name
         ];
     }
 }

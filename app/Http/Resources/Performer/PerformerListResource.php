@@ -14,6 +14,11 @@ class PerformerListResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "id" => $this->id,
+            "nickname" => $this->nickname,
+            "bio" => $this->bio,
+            "user" => $this->user->first_name,
+        ];
     }
 }

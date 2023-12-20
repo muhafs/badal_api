@@ -16,10 +16,10 @@ class AddressListResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'address' => $this->address,
             'postcode' => $this->postcode,
-            'city' => $this->whenLoaded('city')->name,
-            'user' => $this->whenLoaded('user')->first_name,
+            'address' => $this->address,
+            'city' => $this->city->name,
+            'user' => $this->user->first_name
         ];
     }
 }

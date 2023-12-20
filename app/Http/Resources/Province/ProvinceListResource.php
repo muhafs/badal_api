@@ -17,7 +17,7 @@ class ProvinceListResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
-            "country" => $this->whenLoaded('country')->name,
+            "country" => $this->country->name
         ];
     }
 }

@@ -18,7 +18,7 @@ class CityListResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'province' => $this->whenLoaded('province')->name,
+            'province' => $this->province->name
         ];
     }
 }
