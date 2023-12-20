@@ -18,7 +18,7 @@ class UpdateCityRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'id' => $this->route('id'),
+            'id' => $this->route('city'),
         ]);
     }
 
@@ -27,7 +27,7 @@ class UpdateCityRequest extends FormRequest
         return [
             'id' => 'required|numeric|exists:cities,id',
             'name' => 'required|string',
-            'province_id' => 'nullable|numeric|exists:provinces,id',
+            'province_id' => 'required|numeric|exists:provinces,id',
         ];
     }
 
@@ -40,7 +40,8 @@ class UpdateCityRequest extends FormRequest
 
             'name.required' => 'City Name can\'t be Empty',
 
-            'province_id.exists' => 'no Province found',
+            'province_id.required' => 'Province is missing',
+            'province_id.exists' => 'no Province found'
         ];
     }
 

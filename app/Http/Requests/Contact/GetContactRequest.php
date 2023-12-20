@@ -2,27 +2,42 @@
 
 namespace App\Http\Requests\Contact;
 
+use App\Http\Traits\HasJsonResponse;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class GetContactRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
+    use HasJsonResponse;
+
+    public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
-    public function rules(): array
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'id' => $this->route('contact'),
+        ]);
+    }
+
+    public function rules()
+    {
+        return ['id' => 'required|numeric|exists:contacts,id'];
+    }
+
+    public function messages()
     {
         return [
-            //
+            'required' => 'Contact is missing',
+            'numeric' => 'Contact is invalid',
+            'exists' => 'No Contact found'
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $this->throwResponse($validator->errors()->first(), 404);
     }
 }

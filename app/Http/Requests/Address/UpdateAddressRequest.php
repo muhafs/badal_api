@@ -18,7 +18,7 @@ class UpdateAddressRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'id' => $this->route('id'),
+            'id' => $this->route('city'),
         ]);
     }
 
@@ -28,7 +28,8 @@ class UpdateAddressRequest extends FormRequest
             'id' => 'required|numeric|exists:addresses,id',
             'address' => 'required|string',
             'postcode' => 'required|string|max:10',
-            'city_id' => 'nullable|numeric|exists:cities,id',
+            'city_id' => 'required|numeric|exists:cities,id',
+            'user_id' => 'required|numeric|exists:users,id',
         ];
     }
 
@@ -44,7 +45,11 @@ class UpdateAddressRequest extends FormRequest
             'postcode.required' => 'Postal Code can\'t be Empty',
             'postcode.max' => 'Postal Code maximal 10 Digits',
 
+            'city_id.required' => 'City is missing',
             'city_id.exists' => 'no City found',
+
+            'user_id.required' => 'User is missing',
+            'user_id.exists' => 'no User found'
         ];
     }
 

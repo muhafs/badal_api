@@ -28,7 +28,7 @@ class StoreCityRequest extends FormRequest
         return [
             'name.required' => 'City Name can\'t be Empty',
 
-            'province_id.required' => 'Province can\'t be Empty',
+            'province_id.required' => 'Province is missing',
             'province_id.exists' => 'no Province found',
         ];
     }

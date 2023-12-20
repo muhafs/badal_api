@@ -18,7 +18,7 @@ class UpdateProvinceRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'id' => $this->route('id'),
+            'id' => $this->route('province'),
         ]);
     }
 
@@ -27,7 +27,7 @@ class UpdateProvinceRequest extends FormRequest
         return [
             'id' => 'required|numeric|exists:provinces,id',
             'name' => 'required|string',
-            'country_id' => 'nullable|numeric|exists:countries,id',
+            'country_id' => 'required|numeric|exists:countries,id',
         ];
     }
 
@@ -40,7 +40,8 @@ class UpdateProvinceRequest extends FormRequest
 
             'name.required' => 'Province Name can\'t be Empty',
 
-            'country_id.exists' => 'no Country found',
+            'country_id.required' => 'Country is missing',
+            'country_id.exists' => 'no Country found'
         ];
     }
 

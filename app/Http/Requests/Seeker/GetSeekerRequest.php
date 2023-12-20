@@ -18,7 +18,7 @@ class GetSeekerRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'id' => $this->route('id'),
+            'id' => $this->route('seeker'),
         ]);
     }
 

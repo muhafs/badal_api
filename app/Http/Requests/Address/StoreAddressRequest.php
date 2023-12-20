@@ -21,6 +21,7 @@ class StoreAddressRequest extends FormRequest
             'address' => 'required|string',
             'postcode' => 'required|string|max:10',
             'city_id' => 'required|numeric|exists:cities,id',
+            'user_id' => 'required|numeric|exists:users,id',
         ];
     }
 
@@ -32,8 +33,11 @@ class StoreAddressRequest extends FormRequest
             'postcode.required' => 'Postal Code can\'t be Empty',
             'postcode.max' => 'Postal Code maximal 10 Digits',
 
-            'city_id.required' => 'City can\'t be Empty',
+            'city_id.required' => 'City is missing',
             'city_id.exists' => 'no City found',
+
+            'user_id.required' => 'User is missing',
+            'user_id.exists' => 'no User found',
         ];
     }
 

@@ -2,27 +2,52 @@
 
 namespace App\Http\Requests\Performer;
 
+use App\Http\Traits\HasJsonResponse;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class UpdatePerformerRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+    use HasJsonResponse;
+
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'id' => $this->route('performer'),
+        ]);
+    }
+
     public function rules(): array
     {
         return [
-            //
+            "id"            => "required|numeric|exists:performers,id",
+            "nickname" => "nullable|string|max:32",
+            "bio" => "required|string",
+            "user_id" => "required|numeric|exists:users,id"
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'id.required' => 'Performer is missing',
+            'id.numeric' => 'Performer is invalid',
+            'id.exists' => 'No Performer found',
+
+            "nickname.*" => "Nickname too long, max is 32 characters",
+
+            "user_id.required" => "User is missing",
+            "user_id.*" => "no User found"
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $this->throwResponse($validator->errors()->first());
     }
 }

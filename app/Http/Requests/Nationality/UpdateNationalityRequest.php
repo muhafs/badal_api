@@ -18,7 +18,7 @@ class UpdateNationalityRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'id' => $this->route('id'),
+            'id' => $this->route('nationality'),
         ]);
     }
 
@@ -27,7 +27,7 @@ class UpdateNationalityRequest extends FormRequest
         return [
             'id' => 'required|numeric|exists:nationalities,id',
             'name' => 'required|string|unique:nationalities,name,' . $this->id,
-            'country_id' => 'nullable|numeric|exists:countries,id',
+            'country_id' => 'required|numeric|exists:countries,id',
         ];
     }
 
@@ -41,6 +41,7 @@ class UpdateNationalityRequest extends FormRequest
             'name.required' => 'Nationality Name can\'t be Empty',
             'name.unique' => 'This name has already taken',
 
+            'country_id.required' => 'Country is missing',
             'country_id.*' => 'no Country found',
         ];
     }
