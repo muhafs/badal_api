@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('email')->nullable()->unique();
             $table->string('whatsapp', 20)->nullable()->unique();
             $table->string('instagram')->nullable()->unique();
-            $table->string('facebook')->nullable()->unique();
+            $table->string('facebook')->nullable();
 
             $table->timestamps();
         });
