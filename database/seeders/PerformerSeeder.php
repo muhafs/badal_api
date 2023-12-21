@@ -21,7 +21,7 @@ class PerformerSeeder extends Seeder
                 Performer::create([
                     'user_id' => $data['0'],
                     'nickname' => str($data['1'])->trim()->isEmpty() ? null : str($data['1'])->title()->squish(),
-                    'bio' => str($data['2'])->trim()->isEmpty() ? null : str($data['1'])->ucfirst()->squish(),
+                    'bio' => str($data['2'])->trim()->isEmpty() ? null : str($data['2'])->ucfirst()->squish(),
                 ]);
             }
             $chaptersRow = false;

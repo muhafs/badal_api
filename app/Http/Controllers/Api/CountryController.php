@@ -42,6 +42,16 @@ class CountryController extends Controller
             $this->throwResponse("Something went Error while Creating Country");
         }
 
+        // Nationality
+        $country->nationality()->create(["name" => str($request->nationality_name)->ucfirst()->trim()]);
+        // Phone
+        $country->phone()->create(["code" => str($request->phone_code)->trim()]);
+        // Currency
+        $country->currency()->create([
+            "name" => str($request->currency_name)->title()->squish(),
+            "code" => str($request->currency_code)->upper()->trim()
+        ]);
+
         return $this->jsonResponse("Success Create Country", $country, 201);
     }
 
@@ -58,6 +68,16 @@ class CountryController extends Controller
         if (!$country) {
             $this->throwResponse("Something went Error while Updating Country");
         }
+
+        // Nationality
+        $country->nationality->update(["name" => str($request->nationality_name)->ucfirst()->trim()]);
+        // Phone
+        $country->phone->update(["code" => str($request->phone_code)->trim()]);
+        // Currency
+        $country->currency->update([
+            "name" => str($request->currency_name)->title()->squish(),
+            "code" => str($request->currency_code)->upper()->trim()
+        ]);
 
         return $this->jsonResponse("Success Update Country", $country, 201);
     }

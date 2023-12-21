@@ -22,10 +22,10 @@ class SeekerResource extends JsonResource
             "id" => $this->id,
             "available" => $this->available ? true : false,
             "hajj_name" => $this->hajj_name,
-            "offer" => Number::currency($this->price, $this->currency->code),
-
+            "offer" => Number::currency($this->price, $this->whenLoaded("currency")->code ?? "USD"),
             "currency" => new CurrencyResource($this->whenLoaded("currency")),
-            "user" => new UserResource($this->whenLoaded("user"))
+            "user" => new UserResource($this->whenLoaded("user")),
+
         ];
     }
 }
