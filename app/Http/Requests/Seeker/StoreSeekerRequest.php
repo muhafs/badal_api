@@ -30,9 +30,6 @@ class StoreSeekerRequest extends FormRequest
         return [
             "hajj_name.*" => "Hajj name too long, max is 32 characters",
 
-            "currency.required" => "Currency is missing",
-            "currency.*" => "Currency is invalid",
-
             "price.required" => "Price can't be Empty",
             "price.integer" => "Price must be a number",
 
