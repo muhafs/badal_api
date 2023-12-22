@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
                     'last_name' => str($data['1'])->ucfirst()->trim(),
                     'gender' => str($data['2'])->upper()->trim(),
                     'birth_date' => Carbon::make($data['3'])->toDateString(),
-                    'image' => str($data['4'])->trim()->isEmpty() ? null : str($data['4'])->trim(),
+                    'image' => trim($data['4']) ? str($data['4'])->trim() : null,
                     'type' => str($data['5'])->upper()->trim(),
                     'nationality_id' => $data['6'],
                 ]);

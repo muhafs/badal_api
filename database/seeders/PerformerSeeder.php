@@ -20,8 +20,8 @@ class PerformerSeeder extends Seeder
             if (!$chaptersRow) {
                 Performer::create([
                     'user_id' => $data['0'],
-                    'nickname' => str($data['1'])->trim()->isEmpty() ? null : str($data['1'])->title()->squish(),
-                    'bio' => str($data['2'])->trim()->isEmpty() ? null : str($data['2'])->ucfirst()->squish(),
+                    'nickname' => trim($data['1']) ? str($data['1'])->title()->squish() : null,
+                    'bio' => trim($data['2']) ? str($data['2'])->ucfirst()->squish() : null,
                 ]);
             }
             $chaptersRow = false;

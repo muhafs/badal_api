@@ -33,8 +33,8 @@ class PerformerController extends Controller
     {
         $performer = Performer::create([
             "user_id" => $request->user_id,
-            "nickname" => str($request->nickname)->trim()->isEmpty() ? null : str($request->nickname)->title()->squish(),
-            "bio" => str($request->bio)->trim()->isEmpty() ? null : str($request->bio)->ucfirst()->squish()
+            "nickname" => trim($request->nickname) ? str($request->nickname)->title()->squish() : null,
+            "bio" => trim($request->bio) ? str($request->bio)->ucfirst()->squish() : null
         ]);
 
         if (!$performer) {
@@ -51,8 +51,8 @@ class PerformerController extends Controller
         $performer->update([
             "user_id" => $request->user_id,
             "nickname" => $request->nickname,
-            "nickname" => str($request->nickname)->trim()->isEmpty() ? null : str($request->nickname)->title()->squish(),
-            "bio" => str($request->bio)->trim()->isEmpty() ? null : str($request->bio)->ucfirst()->squish()
+            "nickname" => trim($request->nickname) ? str($request->nickname)->title()->squish() : null,
+            "bio" => trim($request->bio) ? str($request->bio)->ucfirst()->squish() : null
         ]);
 
         if (!$performer) {
