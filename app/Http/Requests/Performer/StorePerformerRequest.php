@@ -19,7 +19,7 @@ class StorePerformerRequest extends FormRequest
     {
         return [
             "nickname" => "nullable|string|max:32",
-            "bio" => "required|string",
+            "bio" => "nullable|string",
             "user_id" => "required|numeric|exists:users,id"
         ];
     }
