@@ -36,7 +36,7 @@ class UserController extends Controller
             'name' => str($request->name)->title()->squish(),
             'country_id' => $request->country_id,
             'first_name' => str($request->first_name)->ucfirst()->trim(),
-            'last_name' => str($request->last_name)->trim()->isEmpty() ? null : str($request->last_name)->ucfirst()->trim(),
+            'last_name' => trim($request->last_name) ? str($request->last_name)->ucfirst()->trim() : null,
             'gender' => str($request->gender)->upper()->trim(),
             'birth_date' => Carbon::make($request->birth_date)->toDateString(),
             'image' => null,
@@ -47,6 +47,37 @@ class UserController extends Controller
         if (!$user) {
             $this->throwResponse("Something went Error while Creating User");
         }
+
+        if ($user->type == "SKR") {
+            $user->seeker()->create([
+                "hajj_name" => trim($request->hajj_name) ? str($request->hajj_name)->title()->squish() : null,
+                "type" => str($request->seeker_type)->trim()->upper(),
+                "currency_id" => $request->currency_id,
+                "price" => $request->price
+            ]);
+        }
+
+        if ($user->type == "PRF") {
+            $user->performer()->create([
+                "nickname" => trim($request->nickname) ? str($request->nickname)->title()->squish() : null,
+                "bio" => trim($request->bio) ? str($request->bio)->ucfirst()->squish() : null
+            ]);
+        }
+
+        $user->address()->create([
+            'address' => str($request->address)->title()->squish(),
+            'postcode' => str($request->postcode)->upper()->trim(),
+            'city_id' => $request->city_id
+        ]);
+
+        $user->contact()->create([
+            "phone_code_id" => $request->phone_code_id,
+            "phone_number" => str($request->phone_number)->trim(),
+            "email" => trim($request->email) ? str($request->email)->lower()->trim() : null,
+            "whatsapp" => trim($request->whatsapp) ? str($request->whatsapp)->trim() : null,
+            "instagram" => trim($request->instagram) ? str($request->instagram)->lower()->trim() : null,
+            "facebook" => trim($request->facebook) ? str($request->facebook)->title()->squish() : null
+        ]);
 
         return $this->jsonResponse("Success Create User", $user, 201);
     }
@@ -59,7 +90,7 @@ class UserController extends Controller
             'name' => str($request->name)->title()->squish(),
             'country_id' => $request->country_id,
             'first_name' => str($request->first_name)->ucfirst()->trim(),
-            'last_name' => str($request->last_name)->trim()->isEmpty() ? null : str($request->last_name)->ucfirst()->trim(),
+            'last_name' => trim($request->last_name) ? str($request->last_name)->ucfirst()->trim() : null,
             'gender' => str($request->gender)->upper()->trim(),
             'birth_date' => Carbon::make($request->birth_date)->toDateString(),
             'image' => null,
@@ -70,6 +101,37 @@ class UserController extends Controller
         if (!$user) {
             $this->throwResponse("Something went Error while Updating User");
         }
+
+        if ($user->type == "SKR") {
+            $user->seeker->update([
+                "hajj_name" => trim($request->hajj_name) ? str($request->hajj_name)->title()->squish() : null,
+                "type" => str($request->seeker_type)->trim()->upper(),
+                "currency_id" => $request->currency_id,
+                "price" => $request->price
+            ]);
+        }
+
+        if ($user->type == "PRF") {
+            $user->performer->update([
+                "nickname" => trim($request->nickname) ? str($request->nickname)->title()->squish() : null,
+                "bio" => trim($request->bio) ? str($request->bio)->ucfirst()->squish() : null
+            ]);
+        }
+
+        $user->address->update([
+            'address' => str($request->address)->title()->squish(),
+            'postcode' => str($request->postcode)->upper()->trim(),
+            'city_id' => $request->city_id
+        ]);
+
+        $user->contact->update([
+            "phone_code_id" => $request->phone_code_id,
+            "phone_number" => str($request->phone_number)->trim(),
+            "email" => str($request->email)->trim(),
+            "whatsapp" => str($request->whatsapp)->trim(),
+            "instagram" => str($request->instagram)->lower()->trim(),
+            "facebook" => str($request->facebook)->title()->squish()
+        ]);
 
         return $this->jsonResponse("Success Update User", $user, 201);
     }
