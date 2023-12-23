@@ -28,6 +28,7 @@ class UpdateSeekerRequest extends FormRequest
             "id"            => "required|numeric|exists:seekers,id",
             "hajj_name"     => "nullable|string|max:32",
             "price"         => "required|integer",
+            "type" => "required|string|in:HAJJ,UMRAH",
             "currency_id"   => "required|numeric|exists:currencies,id",
             "user_id"       => "required|numeric|exists:users,id"
         ];
@@ -41,6 +42,9 @@ class UpdateSeekerRequest extends FormRequest
             'id.exists' => 'No Seeker found',
 
             "hajj_name.*" => "Hajj name too long, max is 32 characters",
+
+            "type.required" => "Type is missing",
+            "type.*" => "Type is invalid",
 
             "currency.required" => "Currency is missing",
             "currency.*" => "Currency is invalid",

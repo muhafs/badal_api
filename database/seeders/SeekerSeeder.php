@@ -20,9 +20,10 @@ class SeekerSeeder extends Seeder
             if (!$chaptersRow) {
                 Seeker::create([
                     'user_id' => $data['0'],
-                    'hajj_name' => trim($data['1']) ? str($data['1'])->title()->squish() : null,
-                    'currency_id' => $data['2'],
-                    'price' => $data['3'],
+                    'hajj_name' => trim($data['1']) ? str($data['1'])->squish()->title() : null,
+                    'type' => str($data['2'])->trim()->upper(),
+                    'currency_id' => $data['3'],
+                    'price' => $data['4'],
                 ]);
             }
             $chaptersRow = false;

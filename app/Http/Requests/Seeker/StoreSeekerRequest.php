@@ -20,6 +20,7 @@ class StoreSeekerRequest extends FormRequest
         return [
             "hajj_name" => "nullable|string|max:32",
             "price" => "required|integer",
+            "type" => "required|string|in:HAJJ,UMRAH",
             "currency_id" => "required|numeric|exists:currencies,id",
             "user_id" => "required|numeric|exists:users,id"
         ];
@@ -32,6 +33,9 @@ class StoreSeekerRequest extends FormRequest
 
             "price.required" => "Price can't be Empty",
             "price.integer" => "Price must be a number",
+
+            "type.required" => "Type is missing",
+            "type.*" => "Type is invalid",
 
             "currency_id.required" => "Currency is missing",
             "currency_id.*" => "no Currency found",

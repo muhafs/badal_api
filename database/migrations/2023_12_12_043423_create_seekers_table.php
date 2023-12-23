@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('hajj_name', 32)->nullable();
+            $table->enum('type', ["HAJJ", "UMRAH"])->default("UMRAH");
 
             $table->foreignId('currency_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('price');

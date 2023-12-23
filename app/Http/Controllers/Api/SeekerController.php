@@ -38,6 +38,7 @@ class SeekerController extends Controller
         $seeker = Seeker::create([
             "user_id" => $request->user_id,
             "hajj_name" => trim($request->hajj_name) ? str($request->hajj_name)->title()->squish() : null,
+            "type" => str($request->type)->trim()->upper(),
             "currency_id" => $request->currency_id,
             "price" => $request->price
         ]);
@@ -56,6 +57,7 @@ class SeekerController extends Controller
         $seeker->update([
             "user_id" => $request->user_id,
             "hajj_name" => trim($request->hajj_name) ? str($request->hajj_name)->title()->squish() : null,
+            "type" => str($request->type)->trim()->upper(),
             "currency_id" => $request->currency_id,
             "price" => $request->price
         ]);
